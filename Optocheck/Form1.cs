@@ -86,7 +86,7 @@ namespace Optocheck
                     measuredValueLabels[i].Text = "Scanning...";
                     errorValueLabels[i].Text = "Calculating...";
                     statusValueLabels[i].Text = "Calculating...";
-                    statusValueLabels[i].ForeColor = Color.Black;
+                    statusValueLabels[i].BackColor = SystemColors.Control;
                 }
                 scanStatusLabel.Visible = false;
             } else
@@ -110,6 +110,12 @@ namespace Optocheck
                 scanStatusLabel.Text = "Scan Canceled Successfully!";
                 scanStatusLabel.Visible = true;
                 scanStatusLabel.Left = (this.ClientSize.Width - scanStatusLabel.Width) / 2;
+                for (int i = 0; i < 10; ++i)
+                {
+                    measuredValueLabels[i].Text = "";
+                    errorValueLabels[i].Text = "";
+                    statusValueLabels[i].Text = "";
+                }
                 
             }
             
@@ -186,11 +192,11 @@ namespace Optocheck
                     // remove % symbol, convert string to double, and take absolute value to compare to 10%
                 {
                     statusValueLabels[i].Text = "Pass!";
-                    statusValueLabels[i].ForeColor = Color.Green;
+                    statusValueLabels[i].BackColor = Color.Green;
                 } else
                 {
                     statusValueLabels[i].Text = "Fail";
-                    statusValueLabels[i].ForeColor = Color.Red;
+                    statusValueLabels[i].BackColor = Color.Red;
                 }
             }
         }

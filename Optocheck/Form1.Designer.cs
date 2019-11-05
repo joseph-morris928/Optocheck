@@ -78,14 +78,6 @@
             this.errorValue8 = new System.Windows.Forms.Label();
             this.errorValue9 = new System.Windows.Forms.Label();
             this.errorValue10 = new System.Windows.Forms.Label();
-            this.infinityRadioButton = new System.Windows.Forms.RadioButton();
-            this.zboxRadioButton = new System.Windows.Forms.RadioButton();
-            this.frontRadioButton = new System.Windows.Forms.RadioButton();
-            this.cancelScanButton = new System.Windows.Forms.Button();
-            this.scanProgressBar = new System.Windows.Forms.ProgressBar();
-            this.exitButton = new System.Windows.Forms.Button();
-            this.scanTimer = new System.Windows.Forms.Timer(this.components);
-            this.scanStatusLabel = new System.Windows.Forms.Label();
             this.statusLabel1 = new System.Windows.Forms.Label();
             this.statusLabel2 = new System.Windows.Forms.Label();
             this.statusLabel3 = new System.Windows.Forms.Label();
@@ -96,6 +88,14 @@
             this.statusLabel8 = new System.Windows.Forms.Label();
             this.statusLabel9 = new System.Windows.Forms.Label();
             this.statusLabel10 = new System.Windows.Forms.Label();
+            this.infinityRadioButton = new System.Windows.Forms.RadioButton();
+            this.zboxRadioButton = new System.Windows.Forms.RadioButton();
+            this.frontRadioButton = new System.Windows.Forms.RadioButton();
+            this.cancelScanButton = new System.Windows.Forms.Button();
+            this.scanProgressBar = new System.Windows.Forms.ProgressBar();
+            this.exitButton = new System.Windows.Forms.Button();
+            this.scanTimer = new System.Windows.Forms.Timer(this.components);
+            this.scanStatusLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -723,90 +723,6 @@
             this.errorValue10.TabIndex = 26;
             this.errorValue10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // infinityRadioButton
-            // 
-            this.infinityRadioButton.AutoSize = true;
-            this.infinityRadioButton.Location = new System.Drawing.Point(7, 40);
-            this.infinityRadioButton.Name = "infinityRadioButton";
-            this.infinityRadioButton.Size = new System.Drawing.Size(105, 29);
-            this.infinityRadioButton.TabIndex = 5;
-            this.infinityRadioButton.TabStop = true;
-            this.infinityRadioButton.Text = "Infinity";
-            this.infinityRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // zboxRadioButton
-            // 
-            this.zboxRadioButton.AutoSize = true;
-            this.zboxRadioButton.Location = new System.Drawing.Point(7, 75);
-            this.zboxRadioButton.Name = "zboxRadioButton";
-            this.zboxRadioButton.Size = new System.Drawing.Size(100, 29);
-            this.zboxRadioButton.TabIndex = 6;
-            this.zboxRadioButton.TabStop = true;
-            this.zboxRadioButton.Text = "Z-Box";
-            this.zboxRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // frontRadioButton
-            // 
-            this.frontRadioButton.AutoSize = true;
-            this.frontRadioButton.Location = new System.Drawing.Point(7, 110);
-            this.frontRadioButton.Name = "frontRadioButton";
-            this.frontRadioButton.Size = new System.Drawing.Size(93, 29);
-            this.frontRadioButton.TabIndex = 7;
-            this.frontRadioButton.TabStop = true;
-            this.frontRadioButton.Text = "Front";
-            this.frontRadioButton.UseVisualStyleBackColor = true;
-            this.frontRadioButton.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
-            // 
-            // cancelScanButton
-            // 
-            this.cancelScanButton.Enabled = false;
-            this.cancelScanButton.Location = new System.Drawing.Point(7, 197);
-            this.cancelScanButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.cancelScanButton.Name = "cancelScanButton";
-            this.cancelScanButton.Size = new System.Drawing.Size(169, 40);
-            this.cancelScanButton.TabIndex = 8;
-            this.cancelScanButton.Text = "Cancel Scan";
-            this.cancelScanButton.UseVisualStyleBackColor = true;
-            this.cancelScanButton.Click += new System.EventHandler(this.cancelScanButton_Click);
-            // 
-            // scanProgressBar
-            // 
-            this.scanProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.scanProgressBar.Location = new System.Drawing.Point(12, 890);
-            this.scanProgressBar.Name = "scanProgressBar";
-            this.scanProgressBar.Size = new System.Drawing.Size(1760, 66);
-            this.scanProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.scanProgressBar.TabIndex = 9;
-            // 
-            // exitButton
-            // 
-            this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.exitButton.Location = new System.Drawing.Point(1603, 14);
-            this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(169, 61);
-            this.exitButton.TabIndex = 10;
-            this.exitButton.Text = "Exit";
-            this.exitButton.UseVisualStyleBackColor = true;
-            this.exitButton.Click += new System.EventHandler(this.exitButton_click);
-            // 
-            // scanTimer
-            // 
-            this.scanTimer.Tick += new System.EventHandler(this.scanTimer_Tick);
-            // 
-            // scanStatusLabel
-            // 
-            this.scanStatusLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.scanStatusLabel.AutoSize = true;
-            this.scanStatusLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.scanStatusLabel.Location = new System.Drawing.Point(828, 911);
-            this.scanStatusLabel.Name = "scanStatusLabel";
-            this.scanStatusLabel.Size = new System.Drawing.Size(128, 25);
-            this.scanStatusLabel.TabIndex = 11;
-            this.scanStatusLabel.Text = "Scan Status";
-            this.scanStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.scanStatusLabel.Visible = false;
-            // 
             // statusLabel1
             // 
             this.statusLabel1.AutoSize = true;
@@ -916,6 +832,91 @@
             this.statusLabel10.Size = new System.Drawing.Size(274, 83);
             this.statusLabel10.TabIndex = 36;
             this.statusLabel10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // infinityRadioButton
+            // 
+            this.infinityRadioButton.AutoSize = true;
+            this.infinityRadioButton.Location = new System.Drawing.Point(7, 40);
+            this.infinityRadioButton.Name = "infinityRadioButton";
+            this.infinityRadioButton.Size = new System.Drawing.Size(105, 29);
+            this.infinityRadioButton.TabIndex = 5;
+            this.infinityRadioButton.TabStop = true;
+            this.infinityRadioButton.Text = "Infinity";
+            this.infinityRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // zboxRadioButton
+            // 
+            this.zboxRadioButton.AutoSize = true;
+            this.zboxRadioButton.Location = new System.Drawing.Point(7, 75);
+            this.zboxRadioButton.Name = "zboxRadioButton";
+            this.zboxRadioButton.Size = new System.Drawing.Size(100, 29);
+            this.zboxRadioButton.TabIndex = 6;
+            this.zboxRadioButton.TabStop = true;
+            this.zboxRadioButton.Text = "Z-Box";
+            this.zboxRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // frontRadioButton
+            // 
+            this.frontRadioButton.AutoSize = true;
+            this.frontRadioButton.Location = new System.Drawing.Point(7, 110);
+            this.frontRadioButton.Name = "frontRadioButton";
+            this.frontRadioButton.Size = new System.Drawing.Size(93, 29);
+            this.frontRadioButton.TabIndex = 7;
+            this.frontRadioButton.TabStop = true;
+            this.frontRadioButton.Text = "Front";
+            this.frontRadioButton.UseVisualStyleBackColor = true;
+            this.frontRadioButton.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            // 
+            // cancelScanButton
+            // 
+            this.cancelScanButton.Enabled = false;
+            this.cancelScanButton.Location = new System.Drawing.Point(7, 197);
+            this.cancelScanButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cancelScanButton.Name = "cancelScanButton";
+            this.cancelScanButton.Size = new System.Drawing.Size(169, 40);
+            this.cancelScanButton.TabIndex = 8;
+            this.cancelScanButton.Text = "Cancel Scan";
+            this.cancelScanButton.UseVisualStyleBackColor = true;
+            this.cancelScanButton.Click += new System.EventHandler(this.cancelScanButton_Click);
+            // 
+            // scanProgressBar
+            // 
+            this.scanProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.scanProgressBar.BackColor = System.Drawing.SystemColors.Control;
+            this.scanProgressBar.Location = new System.Drawing.Point(12, 890);
+            this.scanProgressBar.Name = "scanProgressBar";
+            this.scanProgressBar.Size = new System.Drawing.Size(1760, 66);
+            this.scanProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.scanProgressBar.TabIndex = 9;
+            // 
+            // exitButton
+            // 
+            this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.exitButton.Location = new System.Drawing.Point(1603, 14);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(169, 61);
+            this.exitButton.TabIndex = 10;
+            this.exitButton.Text = "Exit";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_click);
+            // 
+            // scanTimer
+            // 
+            this.scanTimer.Tick += new System.EventHandler(this.scanTimer_Tick);
+            // 
+            // scanStatusLabel
+            // 
+            this.scanStatusLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.scanStatusLabel.AutoSize = true;
+            this.scanStatusLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.scanStatusLabel.Location = new System.Drawing.Point(828, 911);
+            this.scanStatusLabel.Name = "scanStatusLabel";
+            this.scanStatusLabel.Size = new System.Drawing.Size(128, 25);
+            this.scanStatusLabel.TabIndex = 11;
+            this.scanStatusLabel.Text = "Scan Status";
+            this.scanStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.scanStatusLabel.Visible = false;
             // 
             // Optocheck
             // 
