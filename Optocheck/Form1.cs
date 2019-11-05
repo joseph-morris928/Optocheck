@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Optocheck
         public List<Label> errorValueLabels = new List<Label>();
         public List<Label> statusValueLabels = new List<Label>();
         public string[,] valueArray = new string[10, 2];
+        Stopwatch watch = System.Diagnostics.Stopwatch.StartNew();
         public Optocheck()
         {
             InitializeComponent();
@@ -141,13 +143,16 @@ namespace Optocheck
                 infinityRadioButton.Enabled = true;
                 zboxRadioButton.Enabled = true;
                 frontRadioButton.Enabled = true;
-                // Play Sound
-                SoundPlayer simpleSound = new SoundPlayer(@"C:\Windows\Media\tada.wav");
-                simpleSound.Play();
                 // Functions after scan is complete
-                ScanComplete();
-                CalculateError();
-                PassOrFail();
+                if (File.Exists(@"C:\Users\joemorris\Desktop\Iradion\Test CSV File.csv"))
+                {
+                    ScanComplete();
+                    CalculateError();
+                    PassOrFail();
+                } else
+                {
+                    MessageBox.Show("The .CSV file cannot be found!");
+                }
             } else
             {
                 scanProgressBar.Increment(1);
@@ -156,27 +161,20 @@ namespace Optocheck
 
         private void ScanComplete()
         {
-            if (File.Exists(@"C:\Users\joemorris\Desktop\Iradion\Test CSV File.csv"))
+            watch.Start();
+            using (var reader = new StreamReader(@"C:\Users\joemorris\Desktop\Iradion\Test CSV File.csv"))
             {
-                using (var reader = new StreamReader(@"C:\Users\joemorris\Desktop\Iradion\Test CSV File.csv"))
+                reader.ReadLine(); // header line, to be skipped
+                for (int i = 0; i < 10; ++i)
                 {
-                    reader.ReadLine(); // header line, to be skipped
-                    for (int i = 0; i < 10; ++i)
-                    {
-                        var line = reader.ReadLine(); // read one line
-                        var values = line.Split(','); // separate values by commas and store in values array
-                        valueArray[i, 0] = values[0]; // add name of value to array
-                        valueArray[i, 1] = values[1]; // add measured value to array
-                        measuredValueLabels[i].Text = valueArray[i, 1]; // update measured value label
-                    }
+                    // Parse CSV and update labels
+                    var line = reader.ReadLine(); // read one line
+                    var values = line.Split(','); // separate values by commas and store in values array
+                    valueArray[i, 0] = values[0]; // add name of value to array
+                    valueArray[i, 1] = values[1]; // add measured value to array
+                    measuredValueLabels[i].Text = valueArray[i, 1]; // update measured value label
                 }
-            } else
-            {
-                MessageBox.Show("The .CSV file cannot be found!");
             }
-            
-            
-            
         }
 
         private void CalculateError()
@@ -195,18 +193,30 @@ namespace Optocheck
 
         private void PassOrFail()
         {
+            int numOfPass = 0;
             for (int i = 0; i < 10; ++i)
             {
                 if (Math.Abs(Convert.ToDouble(errorValueLabels[i].Text.TrimEnd('%'))) < 10)
                     // remove % symbol, convert string to double, and take absolute value to compare to 10%
                 {
-                    statusValueLabels[i].Text = "Pass!";
+                    statusValueLabels[i].Text = "Pass";
                     statusValueLabels[i].BackColor = Color.Green;
+                    numOfPass++;
                 } else
                 {
                     statusValueLabels[i].Text = "Fail";
                     statusValueLabels[i].BackColor = Color.Red;
                 }
+            }
+            if (numOfPass == 10)
+            {
+                // Play Success Sound
+                SoundPlayer successSound = new SoundPlayer(@"C:\Windows\Media\tada.wav");
+                successSound.Play();
+            } else
+            {
+                // Play Failure Sound
+
             }
         }
     }
