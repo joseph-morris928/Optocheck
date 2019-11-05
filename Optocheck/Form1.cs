@@ -156,18 +156,27 @@ namespace Optocheck
 
         private void ScanComplete()
         {
-            using (var reader = new StreamReader(@"C:\Users\joemorris\Desktop\Iradion\Test CSV File.csv"))
+            if (File.Exists(@"C:\Users\joemorris\Desktop\Iradion\Test CSV File.csv"))
             {
-                reader.ReadLine(); // header line, to be skipped
-                for (int i = 0; i < 10; ++i)
+                using (var reader = new StreamReader(@"C:\Users\joemorris\Desktop\Iradion\Test CSV File.csv"))
                 {
-                    var line = reader.ReadLine(); // read one line
-                    var values = line.Split(','); // separate values by commas and store in values array
-                    valueArray[i, 0] = values[0]; // add name of value to array
-                    valueArray[i, 1] = values[1]; // add measured value to array
-                    measuredValueLabels[i].Text = valueArray[i, 1]; // update measured value label
+                    reader.ReadLine(); // header line, to be skipped
+                    for (int i = 0; i < 10; ++i)
+                    {
+                        var line = reader.ReadLine(); // read one line
+                        var values = line.Split(','); // separate values by commas and store in values array
+                        valueArray[i, 0] = values[0]; // add name of value to array
+                        valueArray[i, 1] = values[1]; // add measured value to array
+                        measuredValueLabels[i].Text = valueArray[i, 1]; // update measured value label
+                    }
                 }
+            } else
+            {
+                MessageBox.Show("The .CSV file cannot be found!");
             }
+            
+            
+            
         }
 
         private void CalculateError()
