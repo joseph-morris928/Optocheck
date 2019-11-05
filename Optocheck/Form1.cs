@@ -16,6 +16,7 @@ namespace Optocheck
     {
         public List<Label> measuredValueLabels = new List<Label>();
         public List<Label> expectedValueLabels = new List<Label>();
+        public List<Label> errorValueLabels = new List<Label>();
         public string[,] valueArray = new string[10, 2];
         public Optocheck()
         {
@@ -24,10 +25,13 @@ namespace Optocheck
             {
                 Label measuredlabel = (Label)this.Controls.Find("measuredValue" + (i + 1), true)[0];
                 Label expectedlabel = (Label)this.Controls.Find("expectedValue" + (i + 1), true)[0];
+                Label errorlabel = (Label)this.Controls.Find("errorValue" + (i + 1), true)[0];
                 if (measuredlabel != null)
                     measuredValueLabels.Add(measuredlabel);
                 if (expectedlabel != null)
                     expectedValueLabels.Add(expectedlabel);
+                if (errorlabel != null)
+                    errorValueLabels.Add(errorlabel);
             }
         }
 
@@ -153,6 +157,21 @@ namespace Optocheck
                     valueArray[i, 1] = values[1]; //add measured value to array
                     measuredValueLabels[i].Text = valueArray[i, 1]; //update measured value label
                 }
+            }
+            CalculateError();
+        }
+
+        private void CalculateError()
+        {
+            double measured_num, expected_num, numerator, error, percent_error = 0;
+            for (int i = 0; i < 10; ++i)
+            {
+                measured_num = Convert.ToDouble(measuredValueLabels[i].Text);
+                expected_num = Convert.ToDouble(expectedValueLabels[i].Text);
+                numerator = measured_num - expected_num;
+                error = numerator / expected_num;
+                percent_error = Math.Round(error * 100, 2);
+                errorValueLabels[i].Text = percent_error.ToString() + "%";
             }
         }
     }
