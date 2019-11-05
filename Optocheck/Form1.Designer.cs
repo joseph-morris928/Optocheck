@@ -37,7 +37,7 @@
             this.expectedValueLabel = new System.Windows.Forms.Label();
             this.measuredValueLabel = new System.Windows.Forms.Label();
             this.errorLabel = new System.Windows.Forms.Label();
-            this.goNoGoLabel = new System.Windows.Forms.Label();
+            this.passOrFailLabel = new System.Windows.Forms.Label();
             this.measuredValue1 = new System.Windows.Forms.Label();
             this.measuredValue2 = new System.Windows.Forms.Label();
             this.measuredValue3 = new System.Windows.Forms.Label();
@@ -48,14 +48,6 @@
             this.measuredValue8 = new System.Windows.Forms.Label();
             this.measuredValue9 = new System.Windows.Forms.Label();
             this.measuredValue10 = new System.Windows.Forms.Label();
-            this.infinityRadioButton = new System.Windows.Forms.RadioButton();
-            this.zboxRadioButton = new System.Windows.Forms.RadioButton();
-            this.frontRadioButton = new System.Windows.Forms.RadioButton();
-            this.cancelScanButton = new System.Windows.Forms.Button();
-            this.scanProgressBar = new System.Windows.Forms.ProgressBar();
-            this.exitButton = new System.Windows.Forms.Button();
-            this.scanTimer = new System.Windows.Forms.Timer(this.components);
-            this.scanStatusLabel = new System.Windows.Forms.Label();
             this.measurementName1 = new System.Windows.Forms.Label();
             this.measurementName2 = new System.Windows.Forms.Label();
             this.measurementName3 = new System.Windows.Forms.Label();
@@ -86,6 +78,24 @@
             this.errorValue8 = new System.Windows.Forms.Label();
             this.errorValue9 = new System.Windows.Forms.Label();
             this.errorValue10 = new System.Windows.Forms.Label();
+            this.infinityRadioButton = new System.Windows.Forms.RadioButton();
+            this.zboxRadioButton = new System.Windows.Forms.RadioButton();
+            this.frontRadioButton = new System.Windows.Forms.RadioButton();
+            this.cancelScanButton = new System.Windows.Forms.Button();
+            this.scanProgressBar = new System.Windows.Forms.ProgressBar();
+            this.exitButton = new System.Windows.Forms.Button();
+            this.scanTimer = new System.Windows.Forms.Timer(this.components);
+            this.scanStatusLabel = new System.Windows.Forms.Label();
+            this.statusLabel1 = new System.Windows.Forms.Label();
+            this.statusLabel2 = new System.Windows.Forms.Label();
+            this.statusLabel3 = new System.Windows.Forms.Label();
+            this.statusLabel4 = new System.Windows.Forms.Label();
+            this.statusLabel5 = new System.Windows.Forms.Label();
+            this.statusLabel6 = new System.Windows.Forms.Label();
+            this.statusLabel7 = new System.Windows.Forms.Label();
+            this.statusLabel8 = new System.Windows.Forms.Label();
+            this.statusLabel9 = new System.Windows.Forms.Label();
+            this.statusLabel10 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,7 +137,7 @@
             this.tableLayoutPanel1.Controls.Add(this.expectedValueLabel, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.measuredValueLabel, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.errorLabel, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.goNoGoLabel, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.passOrFailLabel, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.measuredValue1, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.measuredValue2, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.measuredValue3, 2, 3);
@@ -168,6 +178,16 @@
             this.tableLayoutPanel1.Controls.Add(this.errorValue8, 3, 8);
             this.tableLayoutPanel1.Controls.Add(this.errorValue9, 3, 9);
             this.tableLayoutPanel1.Controls.Add(this.errorValue10, 3, 10);
+            this.tableLayoutPanel1.Controls.Add(this.statusLabel1, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.statusLabel2, 4, 2);
+            this.tableLayoutPanel1.Controls.Add(this.statusLabel3, 4, 3);
+            this.tableLayoutPanel1.Controls.Add(this.statusLabel4, 4, 4);
+            this.tableLayoutPanel1.Controls.Add(this.statusLabel5, 4, 5);
+            this.tableLayoutPanel1.Controls.Add(this.statusLabel6, 4, 6);
+            this.tableLayoutPanel1.Controls.Add(this.statusLabel7, 4, 7);
+            this.tableLayoutPanel1.Controls.Add(this.statusLabel8, 4, 8);
+            this.tableLayoutPanel1.Controls.Add(this.statusLabel9, 4, 9);
+            this.tableLayoutPanel1.Controls.Add(this.statusLabel10, 4, 10);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(184, 14);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -232,16 +252,16 @@
             this.errorLabel.Text = "Error";
             this.errorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // goNoGoLabel
+            // passOrFailLabel
             // 
-            this.goNoGoLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.goNoGoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.goNoGoLabel.Location = new System.Drawing.Point(1133, 2);
-            this.goNoGoLabel.Name = "goNoGoLabel";
-            this.goNoGoLabel.Size = new System.Drawing.Size(274, 50);
-            this.goNoGoLabel.TabIndex = 4;
-            this.goNoGoLabel.Text = "Go/No-Go";
-            this.goNoGoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.passOrFailLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.passOrFailLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passOrFailLabel.Location = new System.Drawing.Point(1133, 2);
+            this.passOrFailLabel.Name = "passOrFailLabel";
+            this.passOrFailLabel.Size = new System.Drawing.Size(274, 50);
+            this.passOrFailLabel.TabIndex = 4;
+            this.passOrFailLabel.Text = "Pass/Fail";
+            this.passOrFailLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // measuredValue1
             // 
@@ -352,90 +372,6 @@
             this.measuredValue10.Size = new System.Drawing.Size(274, 83);
             this.measuredValue10.TabIndex = 14;
             this.measuredValue10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // infinityRadioButton
-            // 
-            this.infinityRadioButton.AutoSize = true;
-            this.infinityRadioButton.Location = new System.Drawing.Point(7, 40);
-            this.infinityRadioButton.Name = "infinityRadioButton";
-            this.infinityRadioButton.Size = new System.Drawing.Size(105, 29);
-            this.infinityRadioButton.TabIndex = 5;
-            this.infinityRadioButton.TabStop = true;
-            this.infinityRadioButton.Text = "Infinity";
-            this.infinityRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // zboxRadioButton
-            // 
-            this.zboxRadioButton.AutoSize = true;
-            this.zboxRadioButton.Location = new System.Drawing.Point(7, 75);
-            this.zboxRadioButton.Name = "zboxRadioButton";
-            this.zboxRadioButton.Size = new System.Drawing.Size(100, 29);
-            this.zboxRadioButton.TabIndex = 6;
-            this.zboxRadioButton.TabStop = true;
-            this.zboxRadioButton.Text = "Z-Box";
-            this.zboxRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // frontRadioButton
-            // 
-            this.frontRadioButton.AutoSize = true;
-            this.frontRadioButton.Location = new System.Drawing.Point(7, 110);
-            this.frontRadioButton.Name = "frontRadioButton";
-            this.frontRadioButton.Size = new System.Drawing.Size(93, 29);
-            this.frontRadioButton.TabIndex = 7;
-            this.frontRadioButton.TabStop = true;
-            this.frontRadioButton.Text = "Front";
-            this.frontRadioButton.UseVisualStyleBackColor = true;
-            this.frontRadioButton.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
-            // 
-            // cancelScanButton
-            // 
-            this.cancelScanButton.Enabled = false;
-            this.cancelScanButton.Location = new System.Drawing.Point(7, 197);
-            this.cancelScanButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.cancelScanButton.Name = "cancelScanButton";
-            this.cancelScanButton.Size = new System.Drawing.Size(169, 40);
-            this.cancelScanButton.TabIndex = 8;
-            this.cancelScanButton.Text = "Cancel Scan";
-            this.cancelScanButton.UseVisualStyleBackColor = true;
-            this.cancelScanButton.Click += new System.EventHandler(this.cancelScanButton_Click);
-            // 
-            // scanProgressBar
-            // 
-            this.scanProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.scanProgressBar.Location = new System.Drawing.Point(12, 890);
-            this.scanProgressBar.Name = "scanProgressBar";
-            this.scanProgressBar.Size = new System.Drawing.Size(1760, 66);
-            this.scanProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.scanProgressBar.TabIndex = 9;
-            // 
-            // exitButton
-            // 
-            this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.exitButton.Location = new System.Drawing.Point(1603, 14);
-            this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(169, 61);
-            this.exitButton.TabIndex = 10;
-            this.exitButton.Text = "Exit";
-            this.exitButton.UseVisualStyleBackColor = true;
-            this.exitButton.Click += new System.EventHandler(this.exitButton_click);
-            // 
-            // scanTimer
-            // 
-            this.scanTimer.Tick += new System.EventHandler(this.scanTimer_Tick);
-            // 
-            // scanStatusLabel
-            // 
-            this.scanStatusLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.scanStatusLabel.AutoSize = true;
-            this.scanStatusLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.scanStatusLabel.Location = new System.Drawing.Point(828, 911);
-            this.scanStatusLabel.Name = "scanStatusLabel";
-            this.scanStatusLabel.Size = new System.Drawing.Size(128, 25);
-            this.scanStatusLabel.TabIndex = 11;
-            this.scanStatusLabel.Text = "Scan Status";
-            this.scanStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.scanStatusLabel.Visible = false;
             // 
             // measurementName1
             // 
@@ -787,6 +723,200 @@
             this.errorValue10.TabIndex = 26;
             this.errorValue10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // infinityRadioButton
+            // 
+            this.infinityRadioButton.AutoSize = true;
+            this.infinityRadioButton.Location = new System.Drawing.Point(7, 40);
+            this.infinityRadioButton.Name = "infinityRadioButton";
+            this.infinityRadioButton.Size = new System.Drawing.Size(105, 29);
+            this.infinityRadioButton.TabIndex = 5;
+            this.infinityRadioButton.TabStop = true;
+            this.infinityRadioButton.Text = "Infinity";
+            this.infinityRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // zboxRadioButton
+            // 
+            this.zboxRadioButton.AutoSize = true;
+            this.zboxRadioButton.Location = new System.Drawing.Point(7, 75);
+            this.zboxRadioButton.Name = "zboxRadioButton";
+            this.zboxRadioButton.Size = new System.Drawing.Size(100, 29);
+            this.zboxRadioButton.TabIndex = 6;
+            this.zboxRadioButton.TabStop = true;
+            this.zboxRadioButton.Text = "Z-Box";
+            this.zboxRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // frontRadioButton
+            // 
+            this.frontRadioButton.AutoSize = true;
+            this.frontRadioButton.Location = new System.Drawing.Point(7, 110);
+            this.frontRadioButton.Name = "frontRadioButton";
+            this.frontRadioButton.Size = new System.Drawing.Size(93, 29);
+            this.frontRadioButton.TabIndex = 7;
+            this.frontRadioButton.TabStop = true;
+            this.frontRadioButton.Text = "Front";
+            this.frontRadioButton.UseVisualStyleBackColor = true;
+            this.frontRadioButton.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            // 
+            // cancelScanButton
+            // 
+            this.cancelScanButton.Enabled = false;
+            this.cancelScanButton.Location = new System.Drawing.Point(7, 197);
+            this.cancelScanButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.cancelScanButton.Name = "cancelScanButton";
+            this.cancelScanButton.Size = new System.Drawing.Size(169, 40);
+            this.cancelScanButton.TabIndex = 8;
+            this.cancelScanButton.Text = "Cancel Scan";
+            this.cancelScanButton.UseVisualStyleBackColor = true;
+            this.cancelScanButton.Click += new System.EventHandler(this.cancelScanButton_Click);
+            // 
+            // scanProgressBar
+            // 
+            this.scanProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.scanProgressBar.Location = new System.Drawing.Point(12, 890);
+            this.scanProgressBar.Name = "scanProgressBar";
+            this.scanProgressBar.Size = new System.Drawing.Size(1760, 66);
+            this.scanProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.scanProgressBar.TabIndex = 9;
+            // 
+            // exitButton
+            // 
+            this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.exitButton.Location = new System.Drawing.Point(1603, 14);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(169, 61);
+            this.exitButton.TabIndex = 10;
+            this.exitButton.Text = "Exit";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_click);
+            // 
+            // scanTimer
+            // 
+            this.scanTimer.Tick += new System.EventHandler(this.scanTimer_Tick);
+            // 
+            // scanStatusLabel
+            // 
+            this.scanStatusLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.scanStatusLabel.AutoSize = true;
+            this.scanStatusLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.scanStatusLabel.Location = new System.Drawing.Point(828, 911);
+            this.scanStatusLabel.Name = "scanStatusLabel";
+            this.scanStatusLabel.Size = new System.Drawing.Size(128, 25);
+            this.scanStatusLabel.TabIndex = 11;
+            this.scanStatusLabel.Text = "Scan Status";
+            this.scanStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.scanStatusLabel.Visible = false;
+            // 
+            // statusLabel1
+            // 
+            this.statusLabel1.AutoSize = true;
+            this.statusLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel1.Location = new System.Drawing.Point(1133, 54);
+            this.statusLabel1.Name = "statusLabel1";
+            this.statusLabel1.Size = new System.Drawing.Size(274, 79);
+            this.statusLabel1.TabIndex = 27;
+            this.statusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // statusLabel2
+            // 
+            this.statusLabel2.AutoSize = true;
+            this.statusLabel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel2.Location = new System.Drawing.Point(1133, 135);
+            this.statusLabel2.Name = "statusLabel2";
+            this.statusLabel2.Size = new System.Drawing.Size(274, 79);
+            this.statusLabel2.TabIndex = 28;
+            this.statusLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // statusLabel3
+            // 
+            this.statusLabel3.AutoSize = true;
+            this.statusLabel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel3.Location = new System.Drawing.Point(1133, 216);
+            this.statusLabel3.Name = "statusLabel3";
+            this.statusLabel3.Size = new System.Drawing.Size(274, 79);
+            this.statusLabel3.TabIndex = 29;
+            this.statusLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // statusLabel4
+            // 
+            this.statusLabel4.AutoSize = true;
+            this.statusLabel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel4.Location = new System.Drawing.Point(1133, 297);
+            this.statusLabel4.Name = "statusLabel4";
+            this.statusLabel4.Size = new System.Drawing.Size(274, 79);
+            this.statusLabel4.TabIndex = 30;
+            this.statusLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // statusLabel5
+            // 
+            this.statusLabel5.AutoSize = true;
+            this.statusLabel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusLabel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel5.Location = new System.Drawing.Point(1133, 378);
+            this.statusLabel5.Name = "statusLabel5";
+            this.statusLabel5.Size = new System.Drawing.Size(274, 79);
+            this.statusLabel5.TabIndex = 31;
+            this.statusLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // statusLabel6
+            // 
+            this.statusLabel6.AutoSize = true;
+            this.statusLabel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusLabel6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel6.Location = new System.Drawing.Point(1133, 459);
+            this.statusLabel6.Name = "statusLabel6";
+            this.statusLabel6.Size = new System.Drawing.Size(274, 79);
+            this.statusLabel6.TabIndex = 32;
+            this.statusLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // statusLabel7
+            // 
+            this.statusLabel7.AutoSize = true;
+            this.statusLabel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusLabel7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel7.Location = new System.Drawing.Point(1133, 540);
+            this.statusLabel7.Name = "statusLabel7";
+            this.statusLabel7.Size = new System.Drawing.Size(274, 79);
+            this.statusLabel7.TabIndex = 33;
+            this.statusLabel7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // statusLabel8
+            // 
+            this.statusLabel8.AutoSize = true;
+            this.statusLabel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusLabel8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel8.Location = new System.Drawing.Point(1133, 621);
+            this.statusLabel8.Name = "statusLabel8";
+            this.statusLabel8.Size = new System.Drawing.Size(274, 79);
+            this.statusLabel8.TabIndex = 34;
+            this.statusLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // statusLabel9
+            // 
+            this.statusLabel9.AutoSize = true;
+            this.statusLabel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusLabel9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel9.Location = new System.Drawing.Point(1133, 702);
+            this.statusLabel9.Name = "statusLabel9";
+            this.statusLabel9.Size = new System.Drawing.Size(274, 79);
+            this.statusLabel9.TabIndex = 35;
+            this.statusLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // statusLabel10
+            // 
+            this.statusLabel10.AutoSize = true;
+            this.statusLabel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.statusLabel10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel10.Location = new System.Drawing.Point(1133, 783);
+            this.statusLabel10.Name = "statusLabel10";
+            this.statusLabel10.Size = new System.Drawing.Size(274, 83);
+            this.statusLabel10.TabIndex = 36;
+            this.statusLabel10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Optocheck
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -830,7 +960,7 @@
         private System.Windows.Forms.Label expectedValueLabel;
         private System.Windows.Forms.Label measuredValueLabel;
         private System.Windows.Forms.Label errorLabel;
-        private System.Windows.Forms.Label goNoGoLabel;
+        private System.Windows.Forms.Label passOrFailLabel;
         private System.Windows.Forms.ProgressBar scanProgressBar;
         private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.Timer scanTimer;
@@ -875,6 +1005,16 @@
         private System.Windows.Forms.Label errorValue8;
         private System.Windows.Forms.Label errorValue9;
         private System.Windows.Forms.Label errorValue10;
+        private System.Windows.Forms.Label statusLabel1;
+        private System.Windows.Forms.Label statusLabel2;
+        private System.Windows.Forms.Label statusLabel3;
+        private System.Windows.Forms.Label statusLabel4;
+        private System.Windows.Forms.Label statusLabel5;
+        private System.Windows.Forms.Label statusLabel6;
+        private System.Windows.Forms.Label statusLabel7;
+        private System.Windows.Forms.Label statusLabel8;
+        private System.Windows.Forms.Label statusLabel9;
+        private System.Windows.Forms.Label statusLabel10;
     }
 }
 

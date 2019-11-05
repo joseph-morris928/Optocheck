@@ -17,21 +17,26 @@ namespace Optocheck
         public List<Label> measuredValueLabels = new List<Label>();
         public List<Label> expectedValueLabels = new List<Label>();
         public List<Label> errorValueLabels = new List<Label>();
+        public List<Label> statusValueLabels = new List<Label>();
         public string[,] valueArray = new string[10, 2];
         public Optocheck()
         {
             InitializeComponent();
             for (int i = 0; i < 10; ++i)
             {
+                // add labels to all lists
                 Label measuredlabel = (Label)this.Controls.Find("measuredValue" + (i + 1), true)[0];
                 Label expectedlabel = (Label)this.Controls.Find("expectedValue" + (i + 1), true)[0];
                 Label errorlabel = (Label)this.Controls.Find("errorValue" + (i + 1), true)[0];
+                Label statuslabel = (Label)this.Controls.Find("statusLabel" + (i + 1), true)[0];
                 if (measuredlabel != null)
                     measuredValueLabels.Add(measuredlabel);
                 if (expectedlabel != null)
                     expectedValueLabels.Add(expectedlabel);
                 if (errorlabel != null)
                     errorValueLabels.Add(errorlabel);
+                if (statuslabel != null)
+                    statusValueLabels.Add(statuslabel);
             }
         }
 
@@ -78,15 +83,11 @@ namespace Optocheck
                 scanTimer.Start();
                 for (int i = 0; i < 10; ++i)
                 {
-                    Label measuredlabel = (Label)this.Controls.Find("measuredValue" + (i + 1), true)[0];
-                    Label errorlabel = (Label)this.Controls.Find("errorValue" + (i + 1), true)[0];
-                    if (measuredlabel != null)
-                        measuredlabel.Text = "Scanning...";
-                    if (errorlabel != null)
-                        errorlabel.Text = "Calculating...";
+                    measuredValueLabels[i].Text = "Scanning...";
+                    errorValueLabels[i].Text = "Calculating...";
+                    statusValueLabels[i].Text = "Calculating...";
+                    statusValueLabels[i].ForeColor = Color.Black;
                 }
-
-                //Scan Status Label
                 scanStatusLabel.Visible = false;
             } else
             {
@@ -137,7 +138,10 @@ namespace Optocheck
                 // Play Sound
                 SoundPlayer simpleSound = new SoundPlayer(@"C:\Windows\Media\tada.wav");
                 simpleSound.Play();
+                // Functions after scan is complete
                 ScanComplete();
+                CalculateError();
+                PassOrFail();
             } else
             {
                 scanProgressBar.Increment(1);
@@ -148,17 +152,16 @@ namespace Optocheck
         {
             using (var reader = new StreamReader(@"C:\Users\joemorris\Desktop\Iradion\Test CSV File.csv"))
             {
-                reader.ReadLine(); //header line
+                reader.ReadLine(); // header line, to be skipped
                 for (int i = 0; i < 10; ++i)
                 {
-                    var line = reader.ReadLine();
-                    var values = line.Split(',');
-                    valueArray[i, 0] = values[0]; //add name of value to array
-                    valueArray[i, 1] = values[1]; //add measured value to array
-                    measuredValueLabels[i].Text = valueArray[i, 1]; //update measured value label
+                    var line = reader.ReadLine(); // read one line
+                    var values = line.Split(','); // separate values by commas and store in values array
+                    valueArray[i, 0] = values[0]; // add name of value to array
+                    valueArray[i, 1] = values[1]; // add measured value to array
+                    measuredValueLabels[i].Text = valueArray[i, 1]; // update measured value label
                 }
             }
-            CalculateError();
         }
 
         private void CalculateError()
@@ -166,12 +169,29 @@ namespace Optocheck
             double measured_num, expected_num, numerator, error, percent_error = 0;
             for (int i = 0; i < 10; ++i)
             {
-                measured_num = Convert.ToDouble(measuredValueLabels[i].Text);
-                expected_num = Convert.ToDouble(expectedValueLabels[i].Text);
-                numerator = measured_num - expected_num;
-                error = numerator / expected_num;
-                percent_error = Math.Round(error * 100, 2);
-                errorValueLabels[i].Text = percent_error.ToString() + "%";
+                measured_num = Convert.ToDouble(measuredValueLabels[i].Text); // convert measured value from string to double
+                expected_num = Convert.ToDouble(expectedValueLabels[i].Text); // convert expected value from string to double
+                numerator = measured_num - expected_num; // subtraction, creating numerator of percent error expression
+                error = numerator / expected_num; // division, creating the error
+                percent_error = Math.Round(error * 100, 2); // multiply by 100 to get a percentage and round to 2 decimal places
+                errorValueLabels[i].Text = percent_error.ToString() + "%"; // update the labels and append % symbol to end
+            }
+        }
+
+        private void PassOrFail()
+        {
+            for (int i = 0; i < 10; ++i)
+            {
+                if (Math.Abs(Convert.ToDouble(errorValueLabels[i].Text.TrimEnd('%'))) < 10)
+                    // remove % symbol, convert string to double, and take absolute value to compare to 10%
+                {
+                    statusValueLabels[i].Text = "Pass!";
+                    statusValueLabels[i].ForeColor = Color.Green;
+                } else
+                {
+                    statusValueLabels[i].Text = "Fail";
+                    statusValueLabels[i].ForeColor = Color.Red;
+                }
             }
         }
     }
