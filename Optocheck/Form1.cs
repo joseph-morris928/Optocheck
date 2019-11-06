@@ -216,7 +216,8 @@ namespace Optocheck
             } else
             {
                 // Play Failure Sound
-
+                SoundPlayer failureSound = new SoundPlayer(@"C:\Windows\Media\chord.wav");
+                failureSound.Play();
             }
         }
     }
