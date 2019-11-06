@@ -155,7 +155,7 @@ namespace Optocheck
                 }
             } else
             {
-                scanProgressBar.Increment(1);
+                scanProgressBar.Increment(10);
             }
         }
 
@@ -218,6 +218,8 @@ namespace Optocheck
                 // Play Failure Sound
 
             }
+            watch.Stop();
+            MessageBox.Show($"Execution Time: {watch.ElapsedMilliseconds} ms");
         }
     }
 }
