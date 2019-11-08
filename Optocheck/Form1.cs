@@ -21,8 +21,8 @@ namespace Optocheck
         public List<Label> errorValueLabels = new List<Label>();
         public List<Label> statusValueLabels = new List<Label>();
         public List<string> infinityValues = new List<string>() { "0.13", "0.43", "0.23", "0.7", "0.36", "0.52", "0.94", "1.12", "0.74", "0.68"};
-        public List<string> zboxValues = new List<string>() { "0.13", "0.43", "0.23", "0.7", "0.36", "0.52", "0.94", "1.12", "0.74", "0.68" };
-        public List<string> frontValues = new List<string>() { "0.13", "0.43", "0.23", "0.7", "0.36", "0.52", "0.94", "1.12", "0.74", "0.68" };
+        public List<string> zboxValues = new List<string>() { "0.13", "0.23", "0.28", "0.42", "0.51", "0.58", "0.75", "0.82", "0.96", "1.06" };
+        public List<string> frontValues = new List<string>() { "1.03", "0.87", "0.75", "0.72", "0.64", "0.52", "0.35", "0.34", "0.22", "0.07" };
         public string[,] valueArray = new string[10, 2];
         public string csvInfinityPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Infinity.csv";
         public string csvZboxPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Zbox.csv";
@@ -131,32 +131,31 @@ namespace Optocheck
                 zboxRadioButton.Enabled = true;
                 frontRadioButton.Enabled = true;
                 // Functions after scan is complete
-                if ((infinityRadioButton.Checked == true && File.Exists(csvInfinityPath))
-                    || (zboxRadioButton.Checked==true && File.Exists(csvZboxPath))
-                    || (frontRadioButton.Checked==true && File.Exists(csvFrontPath)))
+                if (infinityRadioButton.Checked == true)
                 {
-
-                }
-                /*if (File.Exists(csvPath))
-                {
-                    ScanComplete();
-                    CalculateError();
-                    PassOrFail();
-                }
-                else
-                {
-                    MessageBox.Show("The .CSV file cannot be found!");
-                    for (int i = 0; i < 10; ++i)
+                    if (File.Exists(csvInfinityPath))
                     {
-                        measuredValueLabels[i].Text = "";
-                        errorValueLabels[i].Text = "";
-                        statusValueLabels[i].Text = "";
-                    }
-                    scanProgressBar.Value = 0;
-                    infinityRadioButton.Checked = false;
-                    zboxRadioButton.Checked = false;
-                    frontRadioButton.Checked = false;
-                }*/
+                        ScanComplete(csvInfinityPath);
+                        CalculateError();
+                        PassOrFail();
+                    } else CSVNotFound();
+                } else if (zboxRadioButton.Checked == true)
+                {
+                    if (File.Exists(csvZboxPath))
+                    {
+                        ScanComplete(csvZboxPath);
+                        CalculateError();
+                        PassOrFail();
+                    } else CSVNotFound();
+                } else if (frontRadioButton.Checked == true)
+                {
+                    if (File.Exists(csvFrontPath))
+                    {
+                        ScanComplete(csvFrontPath);
+                        CalculateError();
+                        PassOrFail();
+                    } else CSVNotFound();
+                }
             }
             else scanProgressBar.Increment(1);
         }
@@ -191,12 +190,6 @@ namespace Optocheck
                 percent_error = Math.Round(error * 100, 2); // multiply by 100 to get a percentage and round to 2 decimal places
                 errorValueLabels[i].Text = percent_error.ToString() + "%"; // update the labels and append % symbol to end
             }
-
-            foreach(Label label in measuredValueLabels)
-            {
-
-            }
-
         }
 
         private void PassOrFail()
@@ -227,6 +220,22 @@ namespace Optocheck
                 SoundPlayer failureSound = new SoundPlayer(@"C:\Windows\Media\chord.wav");
                 failureSound.Play();
             }
+        }
+
+        private void CSVNotFound()
+        {
+            MessageBox.Show("The .CSV file cannot be found!");
+            for (int i = 0; i < 10; ++i)
+            {
+                expectedValueLabels[i].Text = "";
+                measuredValueLabels[i].Text = "";
+                errorValueLabels[i].Text = "";
+                statusValueLabels[i].Text = "";
+            }
+            scanProgressBar.Value = 0;
+            infinityRadioButton.Checked = false;
+            zboxRadioButton.Checked = false;
+            frontRadioButton.Checked = false;
         }
     }
 }
