@@ -99,6 +99,7 @@ namespace Optocheck
                 scanStatusLabel.Left = (this.ClientSize.Width - scanStatusLabel.Width) / 2;
                 for (int i = 0; i < 10; ++i)
                 {
+                    expectedValueLabels[i].Text = "";
                     measuredValueLabels[i].Text = "";
                     errorValueLabels[i].Text = "";
                     statusValueLabels[i].Text = "";
