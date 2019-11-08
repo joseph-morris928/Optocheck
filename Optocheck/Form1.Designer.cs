@@ -108,7 +108,6 @@
             this.mirrorTypeLabel.Size = new System.Drawing.Size(122, 25);
             this.mirrorTypeLabel.TabIndex = 1;
             this.mirrorTypeLabel.Text = "Mirror Type";
-            this.mirrorTypeLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // scanButton
             // 
@@ -502,7 +501,6 @@
             this.expectedValue1.Name = "expectedValue1";
             this.expectedValue1.Size = new System.Drawing.Size(274, 79);
             this.expectedValue1.TabIndex = 25;
-            this.expectedValue1.Text = "0.13";
             this.expectedValue1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // expectedValue2
@@ -514,7 +512,6 @@
             this.expectedValue2.Name = "expectedValue2";
             this.expectedValue2.Size = new System.Drawing.Size(274, 79);
             this.expectedValue2.TabIndex = 25;
-            this.expectedValue2.Text = "0.37";
             this.expectedValue2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // expectedValue3
@@ -526,7 +523,6 @@
             this.expectedValue3.Name = "expectedValue3";
             this.expectedValue3.Size = new System.Drawing.Size(274, 79);
             this.expectedValue3.TabIndex = 25;
-            this.expectedValue3.Text = "0.21";
             this.expectedValue3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // expectedValue4
@@ -538,7 +534,6 @@
             this.expectedValue4.Name = "expectedValue4";
             this.expectedValue4.Size = new System.Drawing.Size(274, 79);
             this.expectedValue4.TabIndex = 25;
-            this.expectedValue4.Text = "0.5";
             this.expectedValue4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // expectedValue5
@@ -550,7 +545,6 @@
             this.expectedValue5.Name = "expectedValue5";
             this.expectedValue5.Size = new System.Drawing.Size(274, 79);
             this.expectedValue5.TabIndex = 25;
-            this.expectedValue5.Text = "0.36";
             this.expectedValue5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // expectedValue6
@@ -562,7 +556,6 @@
             this.expectedValue6.Name = "expectedValue6";
             this.expectedValue6.Size = new System.Drawing.Size(274, 79);
             this.expectedValue6.TabIndex = 25;
-            this.expectedValue6.Text = "0.52";
             this.expectedValue6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // expectedValue7
@@ -574,7 +567,6 @@
             this.expectedValue7.Name = "expectedValue7";
             this.expectedValue7.Size = new System.Drawing.Size(274, 79);
             this.expectedValue7.TabIndex = 25;
-            this.expectedValue7.Text = "0.9";
             this.expectedValue7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // expectedValue8
@@ -586,7 +578,6 @@
             this.expectedValue8.Name = "expectedValue8";
             this.expectedValue8.Size = new System.Drawing.Size(274, 79);
             this.expectedValue8.TabIndex = 25;
-            this.expectedValue8.Text = "1.14";
             this.expectedValue8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // expectedValue9
@@ -598,7 +589,6 @@
             this.expectedValue9.Name = "expectedValue9";
             this.expectedValue9.Size = new System.Drawing.Size(274, 79);
             this.expectedValue9.TabIndex = 25;
-            this.expectedValue9.Text = "0.86";
             this.expectedValue9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // expectedValue10
@@ -610,7 +600,6 @@
             this.expectedValue10.Name = "expectedValue10";
             this.expectedValue10.Size = new System.Drawing.Size(274, 83);
             this.expectedValue10.TabIndex = 25;
-            this.expectedValue10.Text = "0.58";
             this.expectedValue10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // errorValue1
@@ -865,7 +854,6 @@
             this.frontRadioButton.TabStop = true;
             this.frontRadioButton.Text = "Front";
             this.frontRadioButton.UseVisualStyleBackColor = true;
-            this.frontRadioButton.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
             // cancelScanButton
             // 
@@ -941,7 +929,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Optocheck";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

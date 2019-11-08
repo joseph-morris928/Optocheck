@@ -15,22 +15,33 @@ namespace Optocheck
 {
     public partial class Optocheck : Form
     {
-        public List<Label> measuredValueLabels = new List<Label>();
+        public List<Label> measurementNameLabels = new List<Label>();
         public List<Label> expectedValueLabels = new List<Label>();
+        public List<Label> measuredValueLabels = new List<Label>();
         public List<Label> errorValueLabels = new List<Label>();
         public List<Label> statusValueLabels = new List<Label>();
+        public List<string> infinityValues = new List<string>() { "0.13", "0.43", "0.23", "0.7", "0.36", "0.52", "0.94", "1.12", "0.74", "0.68"};
+        public List<string> zboxValues = new List<string>() { "0.13", "0.43", "0.23", "0.7", "0.36", "0.52", "0.94", "1.12", "0.74", "0.68" };
+        public List<string> frontValues = new List<string>() { "0.13", "0.43", "0.23", "0.7", "0.36", "0.52", "0.94", "1.12", "0.74", "0.68" };
         public string[,] valueArray = new string[10, 2];
-        Stopwatch watch = System.Diagnostics.Stopwatch.StartNew();
+        public string csvInfinityPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Infinity.csv";
+        public string csvZboxPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Zbox.csv";
+        public string csvFrontPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Front.csv";
+        private bool isMessageBoxOpen = false;
+
         public Optocheck()
         {
             InitializeComponent();
             for (int i = 0; i < 10; ++i)
             {
                 // add labels to all lists
-                Label measuredlabel = (Label)this.Controls.Find("measuredValue" + (i + 1), true)[0];
+                Label namelabel = (Label)this.Controls.Find("measurementName" + (i + 1), true)[0];
                 Label expectedlabel = (Label)this.Controls.Find("expectedValue" + (i + 1), true)[0];
+                Label measuredlabel = (Label)this.Controls.Find("measuredValue" + (i + 1), true)[0];
                 Label errorlabel = (Label)this.Controls.Find("errorValue" + (i + 1), true)[0];
                 Label statuslabel = (Label)this.Controls.Find("statusLabel" + (i + 1), true)[0];
+                if (namelabel != null)
+                    measurementNameLabels.Add(namelabel);
                 if (measuredlabel != null)
                     measuredValueLabels.Add(measuredlabel);
                 if (expectedlabel != null)
@@ -41,37 +52,6 @@ namespace Optocheck
                     statusValueLabels.Add(statuslabel);
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButton3_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void scanButton_click(object sender, EventArgs e)
         {
             if ((infinityRadioButton.Checked==true) || (zboxRadioButton.Checked==true) || (frontRadioButton.Checked==true))
@@ -85,6 +65,9 @@ namespace Optocheck
                 scanTimer.Start();
                 for (int i = 0; i < 10; ++i)
                 {
+                    if (infinityRadioButton.Checked == true) expectedValueLabels[i].Text = infinityValues[i];
+                    else if (zboxRadioButton.Checked == true) expectedValueLabels[i].Text = zboxValues[i];
+                    else if (frontRadioButton.Checked == true) expectedValueLabels[i].Text = frontValues[i];
                     measuredValueLabels[i].Text = "Scanning...";
                     errorValueLabels[i].Text = "Calculating...";
                     statusValueLabels[i].Text = "Calculating...";
@@ -99,7 +82,9 @@ namespace Optocheck
 
         private void cancelScanButton_Click(object sender, EventArgs e)
         {
+            isMessageBoxOpen = true;
             DialogResult result = MessageBox.Show("Are you sure you want to cancel the scan?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            isMessageBoxOpen = false;
             if (result == DialogResult.Yes)
             {
                 scanTimer.Stop();
@@ -135,6 +120,8 @@ namespace Optocheck
 
         private void scanTimer_Tick(object sender, EventArgs e)
         {
+            if (isMessageBoxOpen) return;
+
             if (scanProgressBar.Value == 100)
             {
                 scanTimer.Stop();
@@ -144,25 +131,39 @@ namespace Optocheck
                 zboxRadioButton.Enabled = true;
                 frontRadioButton.Enabled = true;
                 // Functions after scan is complete
-                if (File.Exists(@"C:\Users\joemorris\Desktop\Iradion\Test CSV File.csv"))
+                if ((infinityRadioButton.Checked == true && File.Exists(csvInfinityPath))
+                    || (zboxRadioButton.Checked==true && File.Exists(csvZboxPath))
+                    || (frontRadioButton.Checked==true && File.Exists(csvFrontPath)))
+                {
+
+                }
+                /*if (File.Exists(csvPath))
                 {
                     ScanComplete();
                     CalculateError();
                     PassOrFail();
-                } else
+                }
+                else
                 {
                     MessageBox.Show("The .CSV file cannot be found!");
-                }
-            } else
-            {
-                scanProgressBar.Increment(10);
+                    for (int i = 0; i < 10; ++i)
+                    {
+                        measuredValueLabels[i].Text = "";
+                        errorValueLabels[i].Text = "";
+                        statusValueLabels[i].Text = "";
+                    }
+                    scanProgressBar.Value = 0;
+                    infinityRadioButton.Checked = false;
+                    zboxRadioButton.Checked = false;
+                    frontRadioButton.Checked = false;
+                }*/
             }
+            else scanProgressBar.Increment(1);
         }
 
-        private void ScanComplete()
+        private void ScanComplete(string filepath)
         {
-            watch.Start();
-            using (var reader = new StreamReader(@"C:\Users\joemorris\Desktop\Iradion\Test CSV File.csv"))
+            using (var reader = new StreamReader(filepath))
             {
                 reader.ReadLine(); // header line, to be skipped
                 for (int i = 0; i < 10; ++i)
@@ -174,6 +175,7 @@ namespace Optocheck
                     valueArray[i, 1] = values[1]; // add measured value to array
                     measuredValueLabels[i].Text = valueArray[i, 1]; // update measured value label
                 }
+
             }
         }
 
@@ -189,6 +191,12 @@ namespace Optocheck
                 percent_error = Math.Round(error * 100, 2); // multiply by 100 to get a percentage and round to 2 decimal places
                 errorValueLabels[i].Text = percent_error.ToString() + "%"; // update the labels and append % symbol to end
             }
+
+            foreach(Label label in measuredValueLabels)
+            {
+
+            }
+
         }
 
         private void PassOrFail()
@@ -219,8 +227,6 @@ namespace Optocheck
                 SoundPlayer failureSound = new SoundPlayer(@"C:\Windows\Media\chord.wav");
                 failureSound.Play();
             }
-            watch.Stop();
-            MessageBox.Show($"Execution Time: {watch.ElapsedMilliseconds} ms");
         }
     }
 }
