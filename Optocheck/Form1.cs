@@ -94,9 +94,6 @@ namespace Optocheck
                 infinityRadioButton.Enabled = true;
                 zboxRadioButton.Enabled = true;
                 frontRadioButton.Enabled = true;
-                scanStatusLabel.Text = "Scan Canceled Successfully!";
-                scanStatusLabel.Visible = true;
-                scanStatusLabel.Left = (this.ClientSize.Width - scanStatusLabel.Width) / 2;
                 for (int i = 0; i < 10; ++i)
                 {
                     expectedValueLabels[i].Text = "";
@@ -104,6 +101,7 @@ namespace Optocheck
                     errorValueLabels[i].Text = "";
                     statusValueLabels[i].Text = "";
                 }
+                MessageBox.Show("Scan Cancelled Successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 
             }
             
@@ -111,8 +109,10 @@ namespace Optocheck
 
         private void exitButton_click(object sender, EventArgs e)
         {
+            isMessageBoxOpen = true;
             DialogResult result = MessageBox.Show("Are you sure you want to close Optocheck?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if(result == DialogResult.Yes)
+            isMessageBoxOpen = false;
+            if (result == DialogResult.Yes)
             {
                 Application.Exit();
             }
