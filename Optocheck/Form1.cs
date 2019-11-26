@@ -238,5 +238,10 @@ namespace Optocheck
             zboxRadioButton.Checked = false;
             frontRadioButton.Checked = false;
         }
+
+        private void measurementName1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
