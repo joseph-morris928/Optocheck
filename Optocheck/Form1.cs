@@ -18,12 +18,13 @@ namespace Optocheck
         public List<Label> measurementNameLabels = new List<Label>();
         public List<Label> expectedValueLabels = new List<Label>();
         public List<Label> measuredValueLabels = new List<Label>();
-        public List<Label> errorValueLabels = new List<Label>();
+        //public List<Label> errorValueLabels = new List<Label>();
         public List<Label> statusValueLabels = new List<Label>();
-        public List<string> infinityValues = new List<string>() { "0.13", "0.43", "0.23", "0.7", "0.36", "0.52", "0.94", "1.12", "0.74", "0.68"};
-        public List<string> zboxValues = new List<string>() { "0.13", "0.23", "0.28", "0.42", "0.51", "0.58", "0.75", "0.82", "0.96", "1.06" };
-        public List<string> frontValues = new List<string>() { "1.03", "0.87", "0.75", "0.72", "0.64", "0.52", "0.35", "0.34", "0.22", "0.07" };
-        public string[,] valueArray = new string[10, 2];
+
+        public List<string> frontThresholds = new List<string>() { ">8.83 mm and <8.93 mm", ">-1° and <1°", ">-0.06° and <0.06°", ">-0.06° and <0.06°" };
+        public List<string> measurementNames = new List<string>() { "Position", "Roll", "Pitch", "Yaw" };
+
+        public string[,] valueArray = new string[4, 2];
         public string csvInfinityPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Infinity.csv";
         public string csvZboxPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Zbox.csv";
         public string csvFrontPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Front.csv";
@@ -32,13 +33,13 @@ namespace Optocheck
         public Optocheck()
         {
             InitializeComponent();
-            for (int i = 0; i < 10; ++i)
+            for (int i = 0; i < 4; ++i)
             {
                 // add labels to all lists
                 Label namelabel = (Label)this.Controls.Find("measurementName" + (i + 1), true)[0];
                 Label expectedlabel = (Label)this.Controls.Find("expectedValue" + (i + 1), true)[0];
                 Label measuredlabel = (Label)this.Controls.Find("measuredValue" + (i + 1), true)[0];
-                Label errorlabel = (Label)this.Controls.Find("errorValue" + (i + 1), true)[0];
+                //Label errorlabel = (Label)this.Controls.Find("errorValue" + (i + 1), true)[0];
                 Label statuslabel = (Label)this.Controls.Find("statusLabel" + (i + 1), true)[0];
                 if (namelabel != null)
                     measurementNameLabels.Add(namelabel);
@@ -46,8 +47,8 @@ namespace Optocheck
                     measuredValueLabels.Add(measuredlabel);
                 if (expectedlabel != null)
                     expectedValueLabels.Add(expectedlabel);
-                if (errorlabel != null)
-                    errorValueLabels.Add(errorlabel);
+                //if (errorlabel != null)
+                //    errorValueLabels.Add(errorlabel);
                 if (statuslabel != null)
                     statusValueLabels.Add(statuslabel);
             }
@@ -63,17 +64,17 @@ namespace Optocheck
                 zboxRadioButton.Enabled = false;
                 frontRadioButton.Enabled = false;
                 scanTimer.Start();
-                for (int i = 0; i < 10; ++i)
+                for (int i = 0; i < 4; ++i)
                 {
-                    if (infinityRadioButton.Checked == true) expectedValueLabels[i].Text = infinityValues[i];
-                    else if (zboxRadioButton.Checked == true) expectedValueLabels[i].Text = zboxValues[i];
-                    else if (frontRadioButton.Checked == true) expectedValueLabels[i].Text = frontValues[i];
+                    //if (infinityRadioButton.Checked == true) expectedValueLabels[i].Text = infinityValues[i];
+                    //else if (zboxRadioButton.Checked == true) expectedValueLabels[i].Text = zboxValues[i];
+                    if (frontRadioButton.Checked == true) expectedValueLabels[i].Text = frontThresholds[i];
+                    measurementNameLabels[i].Text = measurementNames[i];
                     measuredValueLabels[i].Text = "Scanning...";
-                    errorValueLabels[i].Text = "Calculating...";
+                    //errorValueLabels[i].Text = "Calculating...";
                     statusValueLabels[i].Text = "Calculating...";
                     statusValueLabels[i].BackColor = SystemColors.Control;
                 }
-                scanStatusLabel.Visible = false;
             } else
             {
                 MessageBox.Show("Please select a Mirror Type!", "Mirror Type", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -94,11 +95,11 @@ namespace Optocheck
                 infinityRadioButton.Enabled = true;
                 zboxRadioButton.Enabled = true;
                 frontRadioButton.Enabled = true;
-                for (int i = 0; i < 10; ++i)
+                for (int i = 0; i < 4; ++i)
                 {
                     expectedValueLabels[i].Text = "";
                     measuredValueLabels[i].Text = "";
-                    errorValueLabels[i].Text = "";
+                    //errorValueLabels[i].Text = "";
                     statusValueLabels[i].Text = "";
                 }
                 MessageBox.Show("Scan Cancelled Successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -110,7 +111,8 @@ namespace Optocheck
         private void exitButton_click(object sender, EventArgs e)
         {
             isMessageBoxOpen = true;
-            DialogResult result = MessageBox.Show("Are you sure you want to close Optocheck?", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Are you sure you want to close Optocheck?", "", 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             isMessageBoxOpen = false;
             if (result == DialogResult.Yes)
             {
@@ -137,7 +139,7 @@ namespace Optocheck
                     if (File.Exists(csvInfinityPath))
                     {
                         ScanComplete(csvInfinityPath);
-                        CalculateError();
+                        //CalculateError();
                         PassOrFail();
                     } else CSVNotFound();
                 } else if (zboxRadioButton.Checked == true)
@@ -145,7 +147,7 @@ namespace Optocheck
                     if (File.Exists(csvZboxPath))
                     {
                         ScanComplete(csvZboxPath);
-                        CalculateError();
+                        //CalculateError();
                         PassOrFail();
                     } else CSVNotFound();
                 } else if (frontRadioButton.Checked == true)
@@ -153,7 +155,7 @@ namespace Optocheck
                     if (File.Exists(csvFrontPath))
                     {
                         ScanComplete(csvFrontPath);
-                        CalculateError();
+                        //CalculateError();
                         PassOrFail();
                     } else CSVNotFound();
                 }
@@ -166,7 +168,7 @@ namespace Optocheck
             using (var reader = new StreamReader(filepath))
             {
                 reader.ReadLine(); // header line, to be skipped
-                for (int i = 0; i < 10; ++i)
+                for (int i = 0; i < 4; ++i)
                 {
                     // Parse CSV and update labels
                     var line = reader.ReadLine(); // read one line
@@ -174,6 +176,8 @@ namespace Optocheck
                     valueArray[i, 0] = values[0]; // add name of value to array
                     valueArray[i, 1] = values[1]; // add measured value to array
                     measuredValueLabels[i].Text = valueArray[i, 1]; // update measured value label
+                    if (i == 0) measuredValueLabels[i].Text += " mm";
+                    else measuredValueLabels[i].Text += "°";
                 }
 
             }
@@ -182,35 +186,26 @@ namespace Optocheck
         private void CalculateError()
         {
             double measured_num, expected_num, numerator, error, percent_error = 0;
-            for (int i = 0; i < 10; ++i)
+            for (int i = 0; i < 4; ++i)
             {
                 measured_num = Convert.ToDouble(measuredValueLabels[i].Text); // convert measured value from string to double
                 expected_num = Convert.ToDouble(expectedValueLabels[i].Text); // convert expected value from string to double
                 numerator = measured_num - expected_num; // subtraction, creating numerator of percent error expression
                 error = numerator / expected_num; // division, creating the error
                 percent_error = Math.Round(error * 100, 2); // multiply by 100 to get a percentage and round to 2 decimal places
-                errorValueLabels[i].Text = percent_error.ToString() + "%"; // update the labels and append % symbol to end
+                //errorValueLabels[i].Text = percent_error.ToString() + "%"; // update the labels and append % symbol to end
             }
         }
 
         private void PassOrFail()
         {
             int numOfPass = 0;
-            for (int i = 0; i < 10; ++i)
-            {
-                if (Math.Abs(Convert.ToDouble(errorValueLabels[i].Text.TrimEnd('%'))) < 10)
-                    // remove % symbol, convert string to double, and take absolute value to compare to 10%
-                {
-                    statusValueLabels[i].Text = "Pass";
-                    statusValueLabels[i].BackColor = Color.Green;
-                    numOfPass++;
-                } else
-                {
-                    statusValueLabels[i].Text = "Fail";
-                    statusValueLabels[i].BackColor = Color.Red;
-                }
-            }
-            if (numOfPass == 10)
+            if (PositionCheck() == true) numOfPass++;
+            if (RollCheck() == true) numOfPass++;
+            if (PitchCheck() == true) numOfPass++;
+            if (YawCheck() == true) numOfPass++;
+            
+            if (numOfPass == 4)
             {
                 // Play Success Sound
                 SoundPlayer successSound = new SoundPlayer(@"C:\Windows\Media\tada.wav");
@@ -223,20 +218,125 @@ namespace Optocheck
             }
         }
 
+
+        private bool PositionCheck()
+        {
+            if (Convert.ToDouble(valueArray[0, 1]) > 8.83 && Convert.ToDouble(valueArray[0,1]) < 8.93)
+            {
+                statusLabel1.Text = "Pass";
+                statusLabel1.BackColor = Color.Green;
+                return true;
+            } else
+            {
+                statusLabel1.Text = "Fail";
+                statusLabel1.BackColor = Color.Red;
+                return false;
+            }
+        }
+
+        private bool RollCheck()
+        {
+            if (Convert.ToDouble(valueArray[1,1]) > -1 && Convert.ToDouble(valueArray[1,1]) < 1)
+            {
+                statusLabel2.Text = "Pass";
+                statusLabel2.BackColor = Color.Green;
+                return true;
+            }
+            else
+            {
+                statusLabel2.Text = "Fail";
+                statusLabel2.BackColor = Color.Red;
+                return false;
+            }
+        }
+
+        private bool PitchCheck()
+        {
+            if (Convert.ToDouble(valueArray[2,1]) > -0.06 && Convert.ToDouble(valueArray[2,1]) < 0.06)
+            {
+                statusLabel3.Text = "Pass";
+                statusLabel3.BackColor = Color.Green;
+                return true;
+            }
+            else
+            {
+                statusLabel3.Text = "Fail";
+                statusLabel3.BackColor = Color.Red;
+                return false;
+            }
+        }
+
+        private bool YawCheck()
+        {
+            if (Convert.ToDouble(valueArray[3,1]) > -0.06 && Convert.ToDouble(valueArray[3,1]) < 0.06)
+            {
+                statusLabel4.Text = "Pass";
+                statusLabel4.BackColor = Color.Green;
+                return true;
+            }
+            else
+            {
+                statusLabel4.Text = "Fail";
+                statusLabel4.BackColor = Color.Red;
+                return false;
+            }
+        }
+
         private void CSVNotFound()
         {
             MessageBox.Show("The .CSV file cannot be found!");
-            for (int i = 0; i < 10; ++i)
+            for (int i = 0; i < 4; ++i)
             {
                 expectedValueLabels[i].Text = "";
                 measuredValueLabels[i].Text = "";
-                errorValueLabels[i].Text = "";
+                //errorValueLabels[i].Text = "";
                 statusValueLabels[i].Text = "";
             }
             scanProgressBar.Value = 0;
             infinityRadioButton.Checked = false;
             zboxRadioButton.Checked = false;
             frontRadioButton.Checked = false;
+        }
+
+        private void measurementName_Click(object sender, EventArgs e)
+        {
+            MeasurementPicture measurementPicture = new MeasurementPicture();
+            Label clickedLabel = sender as Label;
+            string imagePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\";
+
+            if (clickedLabel != null)
+            {
+                if (clickedLabel.Text == "Position")
+                {
+                    measurementPicture.pictureBox1.Image = Image.FromFile(imagePath + "PositionCheck.png");
+                    measurementPicture.Text = "Position Check";
+                } else if (clickedLabel.Text== "Roll")
+                {
+                    measurementPicture.pictureBox1.Image = Image.FromFile(imagePath + "RollCheck.png");
+                    measurementPicture.Text = "Roll Check";
+                } else if (clickedLabel.Text == "Pitch")
+                {
+                    measurementPicture.pictureBox1.Image = Image.FromFile(imagePath + "PitchCheck.png");
+                    measurementPicture.Text = "Pitch Check";
+                } else if (clickedLabel.Text == "Yaw")
+                {
+                    measurementPicture.pictureBox1.Image = Image.FromFile(imagePath + "YawCheck.png");
+                    measurementPicture.Text = "Yaw Check";
+                }
+                measurementPicture.ShowDialog();
+
+            }
+        }
+
+        private void notYetWorkingRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton clickedRadioButton = sender as RadioButton;
+            if (clickedRadioButton.Checked == true)
+            {
+                MessageBox.Show("Please select a different mirror type. The " + clickedRadioButton.Text + " mirror type is not yet working but will be implemented in the near future.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                clickedRadioButton.Checked = false;
+            }
+        
         }
     }
 }
