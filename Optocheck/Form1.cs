@@ -287,6 +287,7 @@ namespace Optocheck
             MessageBox.Show("The .CSV file cannot be found!");
             for (int i = 0; i < 4; ++i)
             {
+                measurementNameLabels[i].Text = "";
                 expectedValueLabels[i].Text = "";
                 measuredValueLabels[i].Text = "";
                 //errorValueLabels[i].Text = "";
