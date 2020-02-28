@@ -65,7 +65,9 @@ namespace Optocheck
             var serialNumbers = this._tlCameraSDK.DiscoverAvailableCameras();
             if (serialNumbers.Count == 0) snLabel.Text = "No cameras!";
             else if (serialNumbers.Count == 1) snLabel.Text = serialNumbers.First();
+            this.menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
         }
+
         private void scanButton_click(object sender, EventArgs e)
         {
             if ((infinityRadioButton.Checked==true) || (zboxRadioButton.Checked==true) || (frontRadioButton.Checked==true))
@@ -76,6 +78,8 @@ namespace Optocheck
                 infinityRadioButton.Enabled = false;
                 zboxRadioButton.Enabled = false;
                 frontRadioButton.Enabled = false;
+                //var model = this._tlCameraSDK.OpenCamera(snLabel.Text, false);
+                //snLabel.Text = model.Model;
                 scanTimer.Start();
                 for (int i = 0; i < 4; ++i)
                 {
@@ -351,6 +355,11 @@ namespace Optocheck
                 clickedRadioButton.Checked = false;
             }
         
+        }
+
+        private void Optocheck_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

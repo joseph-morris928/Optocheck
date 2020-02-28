@@ -61,24 +61,29 @@
             this.exitButton = new System.Windows.Forms.Button();
             this.scanTimer = new System.Windows.Forms.Timer(this.components);
             this.snLabel = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mirrorTypeLabel
             // 
             this.mirrorTypeLabel.AutoSize = true;
             this.mirrorTypeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mirrorTypeLabel.Location = new System.Drawing.Point(13, 9);
+            this.mirrorTypeLabel.Location = new System.Drawing.Point(13, 26);
             this.mirrorTypeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.mirrorTypeLabel.Name = "mirrorTypeLabel";
-            this.mirrorTypeLabel.Size = new System.Drawing.Size(180, 37);
+            this.mirrorTypeLabel.Size = new System.Drawing.Size(87, 20);
             this.mirrorTypeLabel.TabIndex = 1;
             this.mirrorTypeLabel.Text = "Mirror Type";
             // 
             // scanButton
             // 
             this.scanButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.scanButton.Location = new System.Drawing.Point(7, 147);
+            this.scanButton.Location = new System.Drawing.Point(7, 164);
             this.scanButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.scanButton.Name = "scanButton";
             this.scanButton.Size = new System.Drawing.Size(169, 40);
@@ -119,7 +124,7 @@
             this.tableLayoutPanel1.Controls.Add(this.statusLabel2, 3, 2);
             this.tableLayoutPanel1.Controls.Add(this.statusLabel3, 3, 3);
             this.tableLayoutPanel1.Controls.Add(this.statusLabel4, 3, 4);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(184, 14);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(184, 29);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 5;
@@ -359,9 +364,9 @@
             // 
             this.infinityRadioButton.AutoSize = true;
             this.infinityRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.infinityRadioButton.Location = new System.Drawing.Point(7, 40);
+            this.infinityRadioButton.Location = new System.Drawing.Point(7, 57);
             this.infinityRadioButton.Name = "infinityRadioButton";
-            this.infinityRadioButton.Size = new System.Drawing.Size(139, 41);
+            this.infinityRadioButton.Size = new System.Drawing.Size(73, 24);
             this.infinityRadioButton.TabIndex = 5;
             this.infinityRadioButton.TabStop = true;
             this.infinityRadioButton.Text = "Infinity";
@@ -372,9 +377,9 @@
             // 
             this.zboxRadioButton.AutoSize = true;
             this.zboxRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.zboxRadioButton.Location = new System.Drawing.Point(7, 75);
+            this.zboxRadioButton.Location = new System.Drawing.Point(7, 92);
             this.zboxRadioButton.Name = "zboxRadioButton";
-            this.zboxRadioButton.Size = new System.Drawing.Size(132, 41);
+            this.zboxRadioButton.Size = new System.Drawing.Size(69, 24);
             this.zboxRadioButton.TabIndex = 6;
             this.zboxRadioButton.TabStop = true;
             this.zboxRadioButton.Text = "Z-Box";
@@ -385,9 +390,9 @@
             // 
             this.frontRadioButton.AutoSize = true;
             this.frontRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.frontRadioButton.Location = new System.Drawing.Point(7, 110);
+            this.frontRadioButton.Location = new System.Drawing.Point(7, 127);
             this.frontRadioButton.Name = "frontRadioButton";
-            this.frontRadioButton.Size = new System.Drawing.Size(124, 41);
+            this.frontRadioButton.Size = new System.Drawing.Size(65, 24);
             this.frontRadioButton.TabIndex = 7;
             this.frontRadioButton.TabStop = true;
             this.frontRadioButton.Text = "Front";
@@ -397,7 +402,7 @@
             // 
             this.cancelScanButton.Enabled = false;
             this.cancelScanButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cancelScanButton.Location = new System.Drawing.Point(7, 197);
+            this.cancelScanButton.Location = new System.Drawing.Point(7, 214);
             this.cancelScanButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cancelScanButton.Name = "cancelScanButton";
             this.cancelScanButton.Size = new System.Drawing.Size(169, 40);
@@ -411,9 +416,9 @@
             this.scanProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.scanProgressBar.BackColor = System.Drawing.SystemColors.Control;
-            this.scanProgressBar.Location = new System.Drawing.Point(12, 647);
+            this.scanProgressBar.Location = new System.Drawing.Point(12, 664);
             this.scanProgressBar.Name = "scanProgressBar";
-            this.scanProgressBar.Size = new System.Drawing.Size(1146, 66);
+            this.scanProgressBar.Size = new System.Drawing.Size(1146, 49);
             this.scanProgressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.scanProgressBar.TabIndex = 9;
             // 
@@ -421,7 +426,7 @@
             // 
             this.exitButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.exitButton.Location = new System.Drawing.Point(989, 14);
+            this.exitButton.Location = new System.Drawing.Point(989, 31);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(169, 61);
             this.exitButton.TabIndex = 10;
@@ -438,9 +443,40 @@
             this.snLabel.AutoSize = true;
             this.snLabel.Location = new System.Drawing.Point(990, 390);
             this.snLabel.Name = "snLabel";
-            this.snLabel.Size = new System.Drawing.Size(70, 25);
+            this.snLabel.Size = new System.Drawing.Size(35, 13);
             this.snLabel.TabIndex = 11;
             this.snLabel.Text = "label1";
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1170, 24);
+            this.menuStrip1.TabIndex = 12;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.testToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // testToolStripMenuItem
+            // 
+            this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testToolStripMenuItem.Text = "test";
             // 
             // Optocheck
             // 
@@ -456,15 +492,20 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.scanButton);
             this.Controls.Add(this.mirrorTypeLabel);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "Optocheck";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Optocheck";
+            this.Load += new System.EventHandler(this.Optocheck_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -502,6 +543,10 @@
         private System.Windows.Forms.Label statusLabel3;
         private System.Windows.Forms.Label statusLabel4;
         private System.Windows.Forms.Label snLabel;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
     }
 }
 
