@@ -10,6 +10,12 @@ using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Thorlabs.TSI.Core;
+using Thorlabs.TSI.CoreInterfaces;
+using Thorlabs.TSI.ImageData;
+using Thorlabs.TSI.ImageDataInterfaces;
+using Thorlabs.TSI.TLCamera;
+using Thorlabs.TSI.TLCameraInterfaces;
 
 namespace Optocheck
 {
@@ -21,7 +27,7 @@ namespace Optocheck
         //public List<Label> errorValueLabels = new List<Label>();
         public List<Label> statusValueLabels = new List<Label>();
 
-        public List<string> frontThresholds = new List<string>() { ">8.83 mm and <8.93 mm", ">-1° and <1°", ">-0.06° and <0.06°", ">-0.06° and <0.06°" };
+        public List<string> frontThresholds = new List<string>() { ">8.83 mm\rand\r<8.93 mm", ">-1° and <1°", ">-0.06°\rand\r<0.06°", ">-0.06°\rand\r<0.06°" };
         public List<string> measurementNames = new List<string>() { "Position", "Roll", "Pitch", "Yaw" };
 
         public string[,] valueArray = new string[4, 2];
@@ -29,6 +35,9 @@ namespace Optocheck
         public string csvZboxPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Zbox.csv";
         public string csvFrontPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Front.csv";
         private bool isMessageBoxOpen = false;
+
+        private ITLCameraSDK _tlCameraSDK;
+        private ITLCamera _tlCamera;
 
         public Optocheck()
         {
@@ -52,6 +61,10 @@ namespace Optocheck
                 if (statuslabel != null)
                     statusValueLabels.Add(statuslabel);
             }
+            this._tlCameraSDK = TLCameraSDK.OpenTLCameraSDK();
+            var serialNumbers = this._tlCameraSDK.DiscoverAvailableCameras();
+            if (serialNumbers.Count == 0) snLabel.Text = "No cameras!";
+            else if (serialNumbers.Count == 1) snLabel.Text = serialNumbers.First();
         }
         private void scanButton_click(object sender, EventArgs e)
         {
