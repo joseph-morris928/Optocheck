@@ -63,8 +63,10 @@
             this.snLabel = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modelNameLabel = new System.Windows.Forms.Label();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -76,7 +78,7 @@
             this.mirrorTypeLabel.Location = new System.Drawing.Point(13, 26);
             this.mirrorTypeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.mirrorTypeLabel.Name = "mirrorTypeLabel";
-            this.mirrorTypeLabel.Size = new System.Drawing.Size(87, 20);
+            this.mirrorTypeLabel.Size = new System.Drawing.Size(180, 37);
             this.mirrorTypeLabel.TabIndex = 1;
             this.mirrorTypeLabel.Text = "Mirror Type";
             // 
@@ -366,7 +368,7 @@
             this.infinityRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.infinityRadioButton.Location = new System.Drawing.Point(7, 57);
             this.infinityRadioButton.Name = "infinityRadioButton";
-            this.infinityRadioButton.Size = new System.Drawing.Size(73, 24);
+            this.infinityRadioButton.Size = new System.Drawing.Size(139, 41);
             this.infinityRadioButton.TabIndex = 5;
             this.infinityRadioButton.TabStop = true;
             this.infinityRadioButton.Text = "Infinity";
@@ -379,7 +381,7 @@
             this.zboxRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.zboxRadioButton.Location = new System.Drawing.Point(7, 92);
             this.zboxRadioButton.Name = "zboxRadioButton";
-            this.zboxRadioButton.Size = new System.Drawing.Size(69, 24);
+            this.zboxRadioButton.Size = new System.Drawing.Size(132, 41);
             this.zboxRadioButton.TabIndex = 6;
             this.zboxRadioButton.TabStop = true;
             this.zboxRadioButton.Text = "Z-Box";
@@ -392,7 +394,7 @@
             this.frontRadioButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.frontRadioButton.Location = new System.Drawing.Point(7, 127);
             this.frontRadioButton.Name = "frontRadioButton";
-            this.frontRadioButton.Size = new System.Drawing.Size(65, 24);
+            this.frontRadioButton.Size = new System.Drawing.Size(124, 41);
             this.frontRadioButton.TabIndex = 7;
             this.frontRadioButton.TabStop = true;
             this.frontRadioButton.Text = "Front";
@@ -441,47 +443,69 @@
             // snLabel
             // 
             this.snLabel.AutoSize = true;
-            this.snLabel.Location = new System.Drawing.Point(990, 390);
+            this.snLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.snLabel.Location = new System.Drawing.Point(989, 602);
             this.snLabel.Name = "snLabel";
-            this.snLabel.Size = new System.Drawing.Size(35, 13);
+            this.snLabel.Size = new System.Drawing.Size(86, 31);
             this.snLabel.TabIndex = 11;
             this.snLabel.Text = "label1";
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1170, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1170, 40);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.testToolStripMenuItem});
+            this.testToolStripMenuItem,
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(72, 36);
             this.fileToolStripMenuItem.Text = "File";
-            // 
-            // editToolStripMenuItem
-            // 
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "Edit";
             // 
             // testToolStripMenuItem
             // 
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.testToolStripMenuItem.Text = "test";
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(362, 44);
+            this.testToolStripMenuItem.Text = "Camera Information";
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(75, 36);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // modelNameLabel
+            // 
+            this.modelNameLabel.AutoSize = true;
+            this.modelNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.modelNameLabel.Location = new System.Drawing.Point(989, 627);
+            this.modelNameLabel.Name = "modelNameLabel";
+            this.modelNameLabel.Size = new System.Drawing.Size(86, 31);
+            this.modelNameLabel.TabIndex = 13;
+            this.modelNameLabel.Text = "label1";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(362, 44);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitButton_click);
             // 
             // Optocheck
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1170, 725);
+            this.Controls.Add(this.modelNameLabel);
             this.Controls.Add(this.snLabel);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.scanProgressBar);
@@ -547,6 +571,8 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
+        private System.Windows.Forms.Label modelNameLabel;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 
