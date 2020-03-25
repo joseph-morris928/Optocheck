@@ -61,11 +61,9 @@ namespace Optocheck
                 if (statuslabel != null)
                     statusValueLabels.Add(statuslabel);
             }
-            this._tlCameraSDK = TLCameraSDK.OpenTLCameraSDK();
-            var serialNumbers = this._tlCameraSDK.DiscoverAvailableCameras();
-            if (serialNumbers.Count == 0) snLabel.Text = "No cameras!";
-            else if (serialNumbers.Count == 1) snLabel.Text = serialNumbers.First();
-            this.menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
+            
+            
+                this.menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
         }
 
         private void scanButton_click(object sender, EventArgs e)
@@ -78,9 +76,6 @@ namespace Optocheck
                 infinityRadioButton.Enabled = false;
                 zboxRadioButton.Enabled = false;
                 frontRadioButton.Enabled = false;
-                
-                var model = this._tlCameraSDK.OpenCamera(snLabel.Text, false);
-                snLabel.Text = model.Model;
                 
                 scanTimer.Start();
                 for (int i = 0; i < 4; ++i)
@@ -135,6 +130,8 @@ namespace Optocheck
             isMessageBoxOpen = false;
             if (result == DialogResult.Yes)
             {
+                this._tlCamera.Dispose();
+                this._tlCameraSDK.Dispose();
                 Application.Exit();
             }
                 
@@ -361,7 +358,21 @@ namespace Optocheck
 
         private void Optocheck_Load(object sender, EventArgs e)
         {
+            _tlCameraSDK = TLCameraSDK.OpenTLCameraSDK();
+            var serialNumbers = _tlCameraSDK.DiscoverAvailableCameras();
 
+            if (serialNumbers.Count == 0)
+            {
+                snLabel.Text = "No cameras!";
+                modelNameLabel.Text = "No cameras!";
+            }
+            else if (serialNumbers.Count == 1)
+            {
+                snLabel.Text = "Serial Number: " + serialNumbers.First();
+                var camera = this._tlCameraSDK.OpenCamera(serialNumbers.First(), false);
+                modelNameLabel.Text = "Model Number: " + camera.Model;
+
+            }
         }
     }
 }
