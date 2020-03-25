@@ -78,8 +78,10 @@ namespace Optocheck
                 infinityRadioButton.Enabled = false;
                 zboxRadioButton.Enabled = false;
                 frontRadioButton.Enabled = false;
-                //var model = this._tlCameraSDK.OpenCamera(snLabel.Text, false);
-                //snLabel.Text = model.Model;
+                
+                var model = this._tlCameraSDK.OpenCamera(snLabel.Text, false);
+                snLabel.Text = model.Model;
+                
                 scanTimer.Start();
                 for (int i = 0; i < 4; ++i)
                 {
