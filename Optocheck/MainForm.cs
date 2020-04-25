@@ -36,8 +36,10 @@ namespace Optocheck
         public string csvFrontPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Front.csv";
         private bool isMessageBoxOpen = false;
 
-        private ITLCameraSDK _tlCameraSDK;
-        private ITLCamera _tlCamera;
+        private ITLCameraSDK sdk;
+        public ITLCamera cam;
+        public IList<String> nums;
+
 
         public Optocheck()
         {
@@ -62,8 +64,28 @@ namespace Optocheck
                     statusValueLabels.Add(statuslabel);
             }
             
+            this.menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
+
+            sdk = TLCameraSDK.OpenTLCameraSDK();
+            nums = sdk.DiscoverAvailableCameras();
             
-                this.menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
+
+            
+
+        }
+
+        public void OnFrameAvailable(ITLCamera sender, EventArgs eventargs)
+        {
+            //Get Frame if available, otherwise get Null
+            Frame availableFrame = sender.GetPendingFrameOrNull();
+            if (availableFrame != null)
+            {
+                Console.WriteLine("Image Available from Camera");
+                //image was received. Process image
+                Bitmap toSave = availableFrame.ImageData.ToBitmap_Format24bppRgb(); //creates Bitmap
+                //Path should be set here. Date Time adds a timestamp
+                toSave.Save("C:\\Users\\nyyan\\Pictures\\ExampleOutput" + DateTime.Now.ToString().Replace('/', '-').Replace(':', ',') + ".png");
+            }
         }
 
         private void scanButton_click(object sender, EventArgs e)
@@ -130,8 +152,6 @@ namespace Optocheck
             isMessageBoxOpen = false;
             if (result == DialogResult.Yes)
             {
-                this._tlCamera.Dispose();
-                this._tlCameraSDK.Dispose();
                 Application.Exit();
             }
                 
@@ -358,21 +378,41 @@ namespace Optocheck
 
         private void Optocheck_Load(object sender, EventArgs e)
         {
-            _tlCameraSDK = TLCameraSDK.OpenTLCameraSDK();
-            var serialNumbers = _tlCameraSDK.DiscoverAvailableCameras();
-
-            if (serialNumbers.Count == 0)
+            if (nums.Count == 1)
             {
-                snLabel.Text = "No cameras!";
-                modelNameLabel.Text = "No cameras!";
-            }
-            else if (serialNumbers.Count == 1)
-            {
-                snLabel.Text = "Serial Number: " + serialNumbers.First();
-                var camera = this._tlCameraSDK.OpenCamera(serialNumbers.First(), false);
-                modelNameLabel.Text = "Model Number: " + camera.Model;
+                cam = sdk.OpenCamera(nums[0], false);
 
+                //Set Camera parameters
+                cam.OperationMode = OperationMode.SoftwareTriggered;
+                cam.ExposureTime_us = 10000;
+                cam.FramesPerTrigger_zeroForUnlimited = 1;//Camera will only pull 1 frame
+                cam.OnImageFrameAvailable += OnFrameAvailable; // Register for Image Received Event
+                cam.Arm();
             }
+        }
+
+        private void Optocheck_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //base.OnClosing(e);
+            if (nums.Count == 1)
+            {
+                cam.Disarm();
+                cam.Dispose();
+                sdk.Dispose();
+            }
+        }
+
+        private void takePicture_button_Click(object sender, EventArgs e)
+        {
+            //Request Image
+            cam.IssueSoftwareTrigger();
+        }
+
+        private void cameraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cam.OnImageFrameAvailable -= OnFrameAvailable;
+            CameraForm cameraForm = new CameraForm(this);
+            cameraForm.ShowDialog();
         }
     }
 }
