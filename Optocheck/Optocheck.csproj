@@ -69,37 +69,35 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Thorlabs.TSI.Core, Version=1.6.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Thorlabs.TSI.Core.dll</HintPath>
+    <Reference Include="Thorlabs.TSI.Core">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Thorlabs\Scientific Imaging\Scientific Camera Support\Scientific_Camera_Interfaces\Scientific Camera Interfaces\SDK\DotNet Toolkit\dlls\Managed_64_lib\Thorlabs.TSI.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Thorlabs.TSI.CoreInterfaces, Version=1.6.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Thorlabs.TSI.CoreInterfaces.dll</HintPath>
+    <Reference Include="Thorlabs.TSI.CoreInterfaces">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Thorlabs\Scientific Imaging\Scientific Camera Support\Scientific_Camera_Interfaces\Scientific Camera Interfaces\SDK\DotNet Toolkit\dlls\Managed_64_lib\Thorlabs.TSI.CoreInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="Thorlabs.TSI.Demosaicker, Version=1.6.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Thorlabs.TSI.Demosaicker">
       <HintPath>..\..\..\..\..\..\..\Program Files\Thorlabs\Scientific Imaging\Scientific Camera Support\Scientific_Camera_Interfaces\Scientific Camera Interfaces\SDK\DotNet Toolkit\dlls\Managed_64_lib\Thorlabs.TSI.Demosaicker.dll</HintPath>
     </Reference>
-    <Reference Include="Thorlabs.TSI.ImageData, Version=1.6.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Thorlabs.TSI.ImageData.dll</HintPath>
+    <Reference Include="Thorlabs.TSI.ImageData">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Thorlabs\Scientific Imaging\Scientific Camera Support\Scientific_Camera_Interfaces\Scientific Camera Interfaces\SDK\DotNet Toolkit\dlls\Managed_64_lib\Thorlabs.TSI.ImageData.dll</HintPath>
     </Reference>
-    <Reference Include="Thorlabs.TSI.ImageDataInterfaces, Version=1.6.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Thorlabs.TSI.ImageDataInterfaces.dll</HintPath>
+    <Reference Include="Thorlabs.TSI.ImageDataInterfaces">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Thorlabs\Scientific Imaging\Scientific Camera Support\Scientific_Camera_Interfaces\Scientific Camera Interfaces\SDK\DotNet Toolkit\dlls\Managed_64_lib\Thorlabs.TSI.ImageDataInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="Thorlabs.TSI.TLCamera, Version=1.6.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Thorlabs.TSI.TLCamera.dll</HintPath>
+    <Reference Include="Thorlabs.TSI.PolarizationInterfaces">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Thorlabs\Scientific Imaging\Scientific Camera Support\Scientific_Camera_Interfaces\Scientific Camera Interfaces\SDK\DotNet Toolkit\dlls\Managed_64_lib\Thorlabs.TSI.PolarizationInterfaces.dll</HintPath>
     </Reference>
-    <Reference Include="Thorlabs.TSI.TLCameraInterfaces, Version=1.6.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Thorlabs.TSI.TLCameraInterfaces.dll</HintPath>
+    <Reference Include="Thorlabs.TSI.PolarizationProcessor">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Thorlabs\Scientific Imaging\Scientific Camera Support\Scientific_Camera_Interfaces\Scientific Camera Interfaces\SDK\DotNet Toolkit\dlls\Managed_64_lib\Thorlabs.TSI.PolarizationProcessor.dll</HintPath>
     </Reference>
-    <Reference Include="thorlabs_tsi_camera_sdk1_cli, Version=1.0.7123.16496, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\thorlabs_tsi_camera_sdk1_cli.dll</HintPath>
+    <Reference Include="Thorlabs.TSI.TLCamera">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Thorlabs\Scientific Imaging\Scientific Camera Support\Scientific_Camera_Interfaces\Scientific Camera Interfaces\SDK\DotNet Toolkit\dlls\Managed_64_lib\Thorlabs.TSI.TLCamera.dll</HintPath>
+    </Reference>
+    <Reference Include="Thorlabs.TSI.TLCameraInterfaces">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Thorlabs\Scientific Imaging\Scientific Camera Support\Scientific_Camera_Interfaces\Scientific Camera Interfaces\SDK\DotNet Toolkit\dlls\Managed_64_lib\Thorlabs.TSI.TLCameraInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="thorlabs_tsi_camera_sdk1_cli">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Thorlabs\Scientific Imaging\Scientific Camera Support\Scientific_Camera_Interfaces\Scientific Camera Interfaces\SDK\DotNet Toolkit\dlls\Managed_64_lib\thorlabs_tsi_camera_sdk1_cli.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
