@@ -5,9 +5,11 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Media;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Thorlabs.TSI.Core;
@@ -16,6 +18,7 @@ using Thorlabs.TSI.ImageData;
 using Thorlabs.TSI.ImageDataInterfaces;
 using Thorlabs.TSI.TLCamera;
 using Thorlabs.TSI.TLCameraInterfaces;
+
 
 namespace Optocheck
 {
@@ -34,11 +37,13 @@ namespace Optocheck
         public string csvInfinityPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Infinity.csv";
         public string csvZboxPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Zbox.csv";
         public string csvFrontPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\Iradion\Front.csv";
+        public string[] lines = System.IO.File.ReadAllLines(@"F:\Desktop\Boxish G code.txt");
         private bool isMessageBoxOpen = false;
 
         private ITLCameraSDK sdk;
         public ITLCamera cam;
         public IList<String> nums;
+        SerialPort port;
 
 
         public Optocheck()
@@ -63,6 +68,8 @@ namespace Optocheck
                 if (statuslabel != null)
                     statusValueLabels.Add(statuslabel);
             }
+
+
             
             this.menuStrip1.BackColor = Color.FromKnownColor(KnownColor.Control);
 
@@ -380,6 +387,9 @@ namespace Optocheck
         {
             if (nums.Count == 1)
             {
+                port = new SerialPort("COM3", 115200, Parity.None, 8, StopBits.One);
+                port.Open();
+
                 cam = sdk.OpenCamera(nums[0], false);
 
                 //Set Camera parameters
@@ -399,20 +409,41 @@ namespace Optocheck
                 cam.Disarm();
                 cam.Dispose();
                 sdk.Dispose();
+                port.Close();
             }
         }
 
         private void takePicture_button_Click(object sender, EventArgs e)
         {
             //Request Image
-            cam.IssueSoftwareTrigger();
+            if (nums.Count == 1)
+            {
+                for (int i = 0; i < lines.Length - 1; ++i)
+                {
+                    port.Write(lines[i] + "\n");
+                    Thread.Sleep(2000);
+                    Task.Delay(2000);
+                    cam.IssueSoftwareTrigger();
+                }
+                MessageBox.Show("Done!");
+            } else
+            {
+                MessageBox.Show("No camera connected!");
+            }
+            
         }
 
         private void cameraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            cam.OnImageFrameAvailable -= OnFrameAvailable;
-            CameraForm cameraForm = new CameraForm(this);
-            cameraForm.ShowDialog();
+            if (nums.Count == 1)
+            {
+                cam.OnImageFrameAvailable -= OnFrameAvailable;
+                CameraForm cameraForm = new CameraForm(this);
+                cameraForm.ShowDialog();
+            } else
+            {
+                MessageBox.Show("No camera connected!");
+            }
         }
     }
 }

@@ -63,9 +63,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.arduinoInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.takePicture_button = new System.Windows.Forms.Button();
-            this.arduinoInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -467,6 +467,12 @@
             this.cameraToolStripMenuItem.Text = "Camera Information";
             this.cameraToolStripMenuItem.Click += new System.EventHandler(this.cameraToolStripMenuItem_Click);
             // 
+            // arduinoInformationToolStripMenuItem
+            // 
+            this.arduinoInformationToolStripMenuItem.Name = "arduinoInformationToolStripMenuItem";
+            this.arduinoInformationToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.arduinoInformationToolStripMenuItem.Text = "Arduino Information";
+            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
@@ -480,15 +486,9 @@
             this.takePicture_button.Name = "takePicture_button";
             this.takePicture_button.Size = new System.Drawing.Size(166, 38);
             this.takePicture_button.TabIndex = 14;
-            this.takePicture_button.Text = "Take Picture";
+            this.takePicture_button.Text = "Take Pictures";
             this.takePicture_button.UseVisualStyleBackColor = true;
             this.takePicture_button.Click += new System.EventHandler(this.takePicture_button_Click);
-            // 
-            // arduinoInformationToolStripMenuItem
-            // 
-            this.arduinoInformationToolStripMenuItem.Name = "arduinoInformationToolStripMenuItem";
-            this.arduinoInformationToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.arduinoInformationToolStripMenuItem.Text = "Arduino Information";
             // 
             // Optocheck
             // 
