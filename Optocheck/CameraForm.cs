@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Threading;
-//using Thorlabs.TSI.ColorInterfaces;
-//using Thorlabs.TSI.ColorProcessor;
 using Thorlabs.TSI.Core;
 using Thorlabs.TSI.CoreInterfaces;
-using Thorlabs.TSI.Demosaicker;
 using Thorlabs.TSI.ImageData;
 using Thorlabs.TSI.ImageDataInterfaces;
 using Thorlabs.TSI.TLCamera;
@@ -19,124 +19,126 @@ namespace Optocheck
 {
     public partial class CameraForm : Form
     {
-        /// <summary>
-        /// Data shared between threads. Always lock the _lockableSharedData object before accessing it.
-        /// </summary>
+        private ITLCameraSDK sdk;
+        private ITLCamera cam;
+        private IList<String> nums;
+
         private class LockableSharedData
         {
-            // This is set to true for each image received, but not every image will be displayed.
-            // For example, if your camera receives 50 frames per second, we only need to display
-            // 20 of them when in live mode, thus reducing CPU usage.
             public bool IsUpdateUIRequested;
 
-            // BGR raw data and information on how to interpret it.
             public ImageDataUShort1D LatestImageData;
         }
 
         private readonly DispatcherTimer _dispatcherTimerUpdateUI = new DispatcherTimer();
         private readonly LockableSharedData _lockableSharedData = new LockableSharedData();
         private Bitmap _latestDisplayBitmap;
+        //public uint _bitDepth;
 
-        private ushort[] _demosaickedData = null;
-        private ushort[] _processedImage = null;
-        private Demosaicker _demosaicker = new Demosaicker();
-        //private ColorFilterArrayPhase _colorFilterArrayPhase;
-        //private ColorProcessor _colorProcessor = null;
-        //private bool _isColor = false;
-        //private ColorProcessorSDK _colorProcessorSDK = null;
-
-        //private ITLCameraSDK _tlCameraSDK;
-        //private ITLCamera cam;
         public CameraForm()
         {
-        }
-
-        private readonly Optocheck _mainForm;
-        public CameraForm(Optocheck mainForm)
-        {
             InitializeComponent();
-            _mainForm = mainForm;
-            if (_mainForm.nums.Count == 0)
-            {
-                snLabel.Text = "Serial Number: No Camera Connected!";
-                modelLabel.Text = "Model Number: No Camera Connected!";
-            }
-            else if (_mainForm.nums.Count > 0)
-            {
-                snLabel.Text = "Serial Number: " + _mainForm.nums[0];
-                modelLabel.Text = "Model Number: " + _mainForm.cam.Model;
+            
+        }
 
-                _mainForm.cam.ExposureTime_us = 50000;
-                if (_mainForm.cam.GainRange.Maximum > 0)
+        private Optocheck mainForm = null;
+        public CameraForm(Form callingForm, ref ITLCamera cam_in, ref ITLCameraSDK sdk_in) // if cam is already opened prior to opening form
+        {
+            mainForm = callingForm as Optocheck;
+            //sdk = TLCameraSDK.OpenTLCameraSDK();
+            sdk = sdk_in;
+            cam = cam_in;
+            nums = sdk.DiscoverAvailableCameras();
+            InitializeComponent();
+        }
+
+        public CameraForm(Form callingForm, ref ITLCameraSDK sdk_in) // if cam is not opened
+        {
+            mainForm = callingForm as Optocheck;
+            //sdk = TLCameraSDK.OpenTLCameraSDK();
+            sdk = sdk_in;
+            nums = sdk.DiscoverAvailableCameras();
+            InitializeComponent();
+        }
+
+        private void CameraForm_Load(object sender, EventArgs e)
+        {
+                // Display each comport available for Arduino to connect to computer
+                foreach (string mynums in nums)
                 {
-                    _mainForm.cam.Gain = 90;
+                    cameraSelection.Items.Add(mynums);
+                    if (nums[0] != null)
+                    {
+                        cameraSelection.SelectedItem = nums[0];
+                        connectButton.Enabled = true;
+                    }
                 }
-                if (_mainForm.cam.BlackLevelRange.Maximum > 0)
-                {
-                    _mainForm.cam.BlackLevel = 48;
-                }
 
-                _mainForm.cam.OnImageFrameAvailable += this.OnImageFrameAvailable;
+            if (cam != null)
+            {
+                this.cam.OnImageFrameAvailable += OnFrameAvailable;
+                //this._bitDepth = cam.BitDepth;
 
-                //_mainForm.cam.OperationMode = OperationMode.SoftwareTriggered;
-
-                //_mainForm.cam.Arm();
-
-                _mainForm.cam.IssueSoftwareTrigger();
+                this.cam.OperationMode = OperationMode.SoftwareTriggered;
+                this.cam.FramesPerTrigger_zeroForUnlimited = 0;
+                if (!cam.IsArmed) this.cam.Arm();
+                this.cam.IssueSoftwareTrigger();
 
                 this._dispatcherTimerUpdateUI.Interval = TimeSpan.FromMilliseconds(50);
                 this._dispatcherTimerUpdateUI.Tick += this.DispatcherTimerUpdateUI_Tick;
                 this._dispatcherTimerUpdateUI.Start();
+
+                connectionStatusLabel.Visible = true;
+                connectButton.Enabled = false;
+                disconnectButton.Enabled = true;
+                //this.mainForm.CameraConnectivityText = "Connected";
+                //this.mainForm.CameraConnectivityColor = Color.Green;
+                imageOutput.Visible = true;
             }
+
         }
 
-        protected override void OnClosing(CancelEventArgs e)
+        private void connectButton_Click(object sender, EventArgs e)
         {
-            base.OnClosing(e);
+            cam = sdk.OpenCamera(cameraSelection.SelectedItem.ToString(), false);
+            //Set Camera parameters
+            //cam.OperationMode = OperationMode.SoftwareTriggered;
+            //cam.ExposureTime_us = 10000;
+            //cam.FramesPerTrigger_zeroForUnlimited = 1;//Camera will only pull 1 frame
+            //cam.OnImageFrameAvailable += OnFrameAvailable; // Register for Image Received Event
+            //cam.Arm();
 
-            if (this._dispatcherTimerUpdateUI != null)
-            {
-                this._dispatcherTimerUpdateUI.Stop();
-                this._dispatcherTimerUpdateUI.Tick -= this.DispatcherTimerUpdateUI_Tick;
-            }
 
-            _mainForm.cam.OnImageFrameAvailable -= this.OnImageFrameAvailable;
-            _mainForm.cam.OnImageFrameAvailable += _mainForm.OnFrameAvailable;
+            this.cam.OnImageFrameAvailable += OnFrameAvailable;
+            //this._bitDepth = cam.BitDepth;
 
+            this.cam.OperationMode = OperationMode.SoftwareTriggered;
+            this.cam.Arm();
+            this.cam.IssueSoftwareTrigger();
+
+
+            this._dispatcherTimerUpdateUI.Interval = TimeSpan.FromMilliseconds(50);
+            this._dispatcherTimerUpdateUI.Tick += this.DispatcherTimerUpdateUI_Tick;
+            this._dispatcherTimerUpdateUI.Start();
+
+            connectionStatusLabel.Visible = true;
+            connectButton.Enabled = false;
+            disconnectButton.Enabled = true;
+            this.mainForm.CameraConnectivityText = "Connected";
+            this.mainForm.CameraConnectivityColor = Color.Green;
+            imageOutput.Visible = true;
         }
 
-        private void OnImageFrameAvailable(ITLCamera sender, EventArgs eventargs)
+        private void OnFrameAvailable(ITLCamera sender, EventArgs eventargs)
         {
             lock (this._lockableSharedData)
             {
                 var frame = sender.GetPendingFrameOrNull();
+
                 if (frame != null)
                 {
-                    //if (this._isColor)
-                    //{
-                    //    var rawData = ((IImageDataUShort1D)frame.ImageData).ImageData_monoOrBGR;
-                    //    var size = frame.ImageData.Width_pixels * frame.ImageData.Height_pixels * 3;
-                    //    if ((this._demosaickedData == null) || (size != this._demosaickedData.Length))
-                    //    {
-                    //        this._demosaickedData = new ushort[frame.ImageData.Width_pixels * frame.ImageData.Height_pixels * 3];
-                    //    }
-                    //    this._demosaicker.Demosaic(frame.ImageData.Width_pixels, frame.ImageData.Height_pixels, 0, 0, this._colorFilterArrayPhase, ColorFormat.BGRPixel, ColorSensorType.Bayer, frame.ImageData.BitDepth, rawData, this._demosaickedData);
-
-                    //    if ((this._processedImage == null) || (size != this._demosaickedData.Length))
-                    //    {
-                    //        this._processedImage = new ushort[frame.ImageData.Width_pixels * frame.ImageData.Height_pixels * 3];
-                    //    }
-
-                    //    ushort maxValue = (ushort)((1 << frame.ImageData.BitDepth) - 1);
-                    //    this._colorProcessor.Transform48To48(_demosaickedData, ColorFormat.BGRPixel, 0, maxValue, 0, maxValue, 0, maxValue, 0, 0, 0, this._processedImage, ColorFormat.BGRPixel);
-                    //    this._lockableSharedData.LatestImageData = new ImageDataUShort1D(_processedImage, frame.ImageData.Width_pixels, frame.ImageData.Height_pixels, frame.ImageData.BitDepth, ImageDataFormat.BGRPixel);
-                    //    this._lockableSharedData.IsUpdateUIRequested = true;
-                    //}
-                    //else
-                    //{
-                        this._lockableSharedData.LatestImageData = (ImageDataUShort1D)(frame.ImageData);
-                        this._lockableSharedData.IsUpdateUIRequested = true;
-                    //}
+                    this._lockableSharedData.LatestImageData = (ImageDataUShort1D)(frame.ImageData);
+                    this._lockableSharedData.IsUpdateUIRequested = true;
                 }
             }
         }
@@ -152,230 +154,63 @@ namespace Optocheck
                         this._latestDisplayBitmap.Dispose();
                         this._latestDisplayBitmap = null;
                     }
-
                     this._latestDisplayBitmap = this._lockableSharedData.LatestImageData.ToBitmap_Format24bppRgb();
-
-                    this.pictureBoxLiveImage.Invalidate();
+                    this.imageOutput.Invalidate();
                     this._lockableSharedData.IsUpdateUIRequested = false;
                 }
             }
         }
 
-        private void pictureBoxLiveImage_Paint(object sender, PaintEventArgs e)
+        private void imageOutput_Paint(object sender, PaintEventArgs e)
         {
             if (this._latestDisplayBitmap != null)
             {
-                var scale = Math.Min((float)this.pictureBoxLiveImage.Width / this._latestDisplayBitmap.Width, (float)this.pictureBoxLiveImage.Height / this._latestDisplayBitmap.Height);
-                e.Graphics.DrawImage(this._latestDisplayBitmap, new RectangleF(0, 0, this._latestDisplayBitmap.Width * scale, this._latestDisplayBitmap.Height * scale));
+                var scale = Math.Min((float)this.imageOutput.Width / this._latestDisplayBitmap.Width, (float)this.imageOutput.Height / this._latestDisplayBitmap.Height);
+                e.Graphics.DrawImage(this._latestDisplayBitmap, new RectangleF(((float)this.imageOutput.Width - this._latestDisplayBitmap.Width * scale) / 2, ((float)this.imageOutput.Height - this._latestDisplayBitmap.Height * scale) / 2, this._latestDisplayBitmap.Width * scale, this._latestDisplayBitmap.Height * scale));
             }
+        }
+
+        private void disconnectButton_Click(object sender, EventArgs e)
+        {
+            if (this.cam != null)
+            {
+                if (this.cam.IsArmed)
+                {
+                    this.cam.Disarm();
+                }
+                if (this._dispatcherTimerUpdateUI != null)
+                {
+                    this._dispatcherTimerUpdateUI.Stop();
+                    this._dispatcherTimerUpdateUI.Tick -= this.DispatcherTimerUpdateUI_Tick;
+                }
+                this.cam.OnImageFrameAvailable -= this.OnFrameAvailable;
+                this.cam.Dispose();
+                this.cam = null;
+                this.mainForm.CameraConnectivityText = "Not Connected";
+                this.mainForm.CameraConnectivityColor = Color.Red;
+                connectionStatusLabel.Visible = false;
+                connectButton.Enabled = true;
+                disconnectButton.Enabled = false;
+                imageOutput.Visible = false;
+            }
+        }
+
+        private void CameraForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (this.cam != null)
+            {
+                if (this.cam.IsArmed)
+                {
+                    this.cam.Disarm();
+                }
+                if (this._dispatcherTimerUpdateUI != null)
+                {
+                    this._dispatcherTimerUpdateUI.Stop();
+                    this._dispatcherTimerUpdateUI.Tick -= this.DispatcherTimerUpdateUI_Tick;
+                }
+                this.cam.OnImageFrameAvailable -= this.OnFrameAvailable;
+            }
+            
         }
     }
 }
-/*
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using System.Windows.Threading;
-using Thorlabs.TSI.ColorInterfaces;
-using Thorlabs.TSI.ColorProcessor;
-using Thorlabs.TSI.Core;
-using Thorlabs.TSI.CoreInterfaces;
-using Thorlabs.TSI.Demosaicker;
-using Thorlabs.TSI.ImageData;
-using Thorlabs.TSI.ImageDataInterfaces;
-using Thorlabs.TSI.TLCamera;
-using Thorlabs.TSI.TLCameraInterfaces;
-
-namespace Example_DotNet_Camera_Interface
-{
-    public partial class Form1 : Form
-    {
-        /// <summary>
-        /// Data shared between threads. Always lock the _lockableSharedData object before accessing it.
-        /// </summary>
-        private class LockableSharedData
-        {
-            // This is set to true for each image received, but not every image will be displayed.
-            // For example, if your camera receives 50 frames per second, we only need to display
-            // 20 of them when in live mode, thus reducing CPU usage.
-            public bool IsUpdateUIRequested;
-
-            // BGR raw data and information on how to interpret it.
-            public ImageDataUShort1D LatestImageData;
-        }
-
-        private readonly DispatcherTimer _dispatcherTimerUpdateUI = new DispatcherTimer();
-        private readonly LockableSharedData _lockableSharedData = new LockableSharedData();
-        private Bitmap _latestDisplayBitmap;
-
-        private ushort[] _demosaickedData = null;
-        private ushort[] _processedImage = null;
-        private Demosaicker _demosaicker = new Demosaicker();
-        private ColorFilterArrayPhase _colorFilterArrayPhase;
-        private ColorProcessor _colorProcessor = null;
-        private bool _isColor = false;
-        private ColorProcessorSDK _colorProcessorSDK = null;
-
-        private ITLCameraSDK _tlCameraSDK;
-        private ITLCamera _tlCamera;
-
-        public Form1()
-        {
-            this.InitializeComponent();
-
-            this._tlCameraSDK = TLCameraSDK.OpenTLCameraSDK();
-            var serialNumbers = this._tlCameraSDK.DiscoverAvailableCameras();
-
-            if (serialNumbers.Count > 0)
-            {
-                this._tlCamera = this._tlCameraSDK.OpenCamera(serialNumbers.First(), false);
-
-                this._tlCamera.ExposureTime_us = 50000;
-                if (this._tlCamera.GainRange.Maximum > 0)
-                {
-                    this._tlCamera.Gain = 90;
-                }
-                if (this._tlCamera.BlackLevelRange.Maximum > 0)
-                {
-                    this._tlCamera.BlackLevel = 48;
-                }
-
-                this._isColor = this._tlCamera.CameraSensorType == CameraSensorType.Bayer;
-                if (this._isColor)
-                {
-                    this._colorProcessorSDK = new ColorProcessorSDK();
-                    this._colorFilterArrayPhase = this._tlCamera.ColorFilterArrayPhase;
-                    var colorCorrectionMatrix = this._tlCamera.GetCameraColorCorrectionMatrix();
-                    var whiteBalanceMatrix = this._tlCamera.GetDefaultWhiteBalanceMatrix();
-                    this._colorProcessor = (ColorProcessor)this._colorProcessorSDK.CreateStandardRGBColorProcessor(whiteBalanceMatrix, colorCorrectionMatrix, (int)this._tlCamera.BitDepth);
-                }
-
-                this._tlCamera.OnImageFrameAvailable += this.OnImageFrameAvailable;
-
-                this._tlCamera.OperationMode = OperationMode.SoftwareTriggered;
-
-                this._tlCamera.Arm();
-
-                this._tlCamera.IssueSoftwareTrigger();
-
-                this._dispatcherTimerUpdateUI.Interval = TimeSpan.FromMilliseconds(50);
-                this._dispatcherTimerUpdateUI.Tick += this.DispatcherTimerUpdateUI_Tick;
-                this._dispatcherTimerUpdateUI.Start();
-
-            }
-            else
-            {
-                MessageBox.Show("No Thorlabs camera detected.");
-            }
-
-        }
-
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            base.OnClosing(e);
-
-            if (this._dispatcherTimerUpdateUI != null)
-            {
-                this._dispatcherTimerUpdateUI.Stop();
-                this._dispatcherTimerUpdateUI.Tick -= this.DispatcherTimerUpdateUI_Tick;
-            }
-
-            if (this._tlCameraSDK != null && this._tlCamera != null)
-            {
-                if (this._tlCamera.IsArmed)
-                {
-                    this._tlCamera.Disarm();
-                }
-
-                this._tlCamera.OnImageFrameAvailable -= this.OnImageFrameAvailable;
-
-                this._tlCamera.Dispose();
-                this._tlCamera = null;
-
-                if (this._colorProcessor != null)
-                {
-                    this._colorProcessor.Dispose();
-                    this._colorProcessor = null;
-                }
-
-                if (this._colorProcessorSDK != null)
-                {
-                    this._colorProcessorSDK.Dispose();
-                    this._colorProcessorSDK = null;
-                }
-
-                this._tlCameraSDK.Dispose();
-                this._tlCameraSDK = null;
-            }
-        }
-
-        private void DispatcherTimerUpdateUI_Tick(object sender, EventArgs e)
-        {
-            lock (this._lockableSharedData)
-            {
-                if (this._lockableSharedData.IsUpdateUIRequested)
-                {
-                    if (this._latestDisplayBitmap != null)
-                    {
-                        this._latestDisplayBitmap.Dispose();
-                        this._latestDisplayBitmap = null;
-                    }
-
-                    this._latestDisplayBitmap = this._lockableSharedData.LatestImageData.ToBitmap_Format24bppRgb();
-
-                    this.pictureBoxLiveImage.Invalidate();
-                    this._lockableSharedData.IsUpdateUIRequested = false;
-                }
-            }
-        }
-
-        private void OnImageFrameAvailable(ITLCamera sender, EventArgs eventargs)
-        {
-            lock (this._lockableSharedData)
-            {
-                var frame = sender.GetPendingFrameOrNull();
-                if (frame != null)
-                {
-                    if (this._isColor)
-                    {
-                        var rawData = ((IImageDataUShort1D)frame.ImageData).ImageData_monoOrBGR;
-                        var size = frame.ImageData.Width_pixels * frame.ImageData.Height_pixels * 3;
-                        if ((this._demosaickedData == null) || (size != this._demosaickedData.Length))
-                        {
-                            this._demosaickedData = new ushort[frame.ImageData.Width_pixels * frame.ImageData.Height_pixels * 3];
-                        }
-                        this._demosaicker.Demosaic(frame.ImageData.Width_pixels, frame.ImageData.Height_pixels, 0, 0, this._colorFilterArrayPhase, ColorFormat.BGRPixel, ColorSensorType.Bayer, frame.ImageData.BitDepth, rawData, this._demosaickedData);
-
-                        if ((this._processedImage == null) || (size != this._demosaickedData.Length))
-                        {
-                            this._processedImage = new ushort[frame.ImageData.Width_pixels * frame.ImageData.Height_pixels * 3];
-                        }
-
-                        ushort maxValue = (ushort)((1 << frame.ImageData.BitDepth) - 1);
-                        this._colorProcessor.Transform48To48(_demosaickedData, ColorFormat.BGRPixel, 0, maxValue, 0, maxValue, 0, maxValue, 0, 0, 0, this._processedImage, ColorFormat.BGRPixel);
-                        this._lockableSharedData.LatestImageData = new ImageDataUShort1D(_processedImage, frame.ImageData.Width_pixels, frame.ImageData.Height_pixels, frame.ImageData.BitDepth, ImageDataFormat.BGRPixel);
-                        this._lockableSharedData.IsUpdateUIRequested = true;
-                    }
-                    else
-                    {
-                        this._lockableSharedData.LatestImageData = (ImageDataUShort1D)(frame.ImageData);
-                        this._lockableSharedData.IsUpdateUIRequested = true;
-                    }
-                }
-            }
-        }
-
-        private void pictureBoxLiveImage_Paint(object sender, PaintEventArgs e)
-        {
-            if (this._latestDisplayBitmap != null)
-            {
-                var scale = Math.Min((float)this.pictureBoxLiveImage.Width / this._latestDisplayBitmap.Width, (float)this.pictureBoxLiveImage.Height / this._latestDisplayBitmap.Height);
-                e.Graphics.DrawImage(this._latestDisplayBitmap, new RectangleF(0, 0, this._latestDisplayBitmap.Width * scale, this._latestDisplayBitmap.Height * scale));
-            }
-        }
-    }
-}
-*/

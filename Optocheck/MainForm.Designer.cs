@@ -63,9 +63,12 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cameraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.arduinoInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cncInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.takePicture_button = new System.Windows.Forms.Button();
+            this.cameraStatusLabel = new System.Windows.Forms.Label();
+            this.cncStatusLabel = new System.Windows.Forms.Label();
+            this.statusOfCameraLabel = new System.Windows.Forms.Label();
+            this.statusOfCNCLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -321,7 +324,7 @@
             // 
             this.statusLabel1.AutoSize = true;
             this.statusLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.statusLabel1.Location = new System.Drawing.Point(602, 54);
             this.statusLabel1.Name = "statusLabel1";
             this.statusLabel1.Size = new System.Drawing.Size(191, 140);
@@ -332,7 +335,7 @@
             // 
             this.statusLabel2.AutoSize = true;
             this.statusLabel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.statusLabel2.Location = new System.Drawing.Point(602, 196);
             this.statusLabel2.Name = "statusLabel2";
             this.statusLabel2.Size = new System.Drawing.Size(191, 140);
@@ -343,7 +346,7 @@
             // 
             this.statusLabel3.AutoSize = true;
             this.statusLabel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.statusLabel3.Location = new System.Drawing.Point(602, 338);
             this.statusLabel3.Name = "statusLabel3";
             this.statusLabel3.Size = new System.Drawing.Size(191, 140);
@@ -354,7 +357,7 @@
             // 
             this.statusLabel4.AutoSize = true;
             this.statusLabel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.statusLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.statusLabel4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.statusLabel4.Location = new System.Drawing.Point(602, 480);
             this.statusLabel4.Name = "statusLabel4";
             this.statusLabel4.Size = new System.Drawing.Size(191, 143);
@@ -454,7 +457,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cameraToolStripMenuItem,
-            this.arduinoInformationToolStripMenuItem,
+            this.cncInformationToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -463,38 +466,72 @@
             // cameraToolStripMenuItem
             // 
             this.cameraToolStripMenuItem.Name = "cameraToolStripMenuItem";
-            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.cameraToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.cameraToolStripMenuItem.Text = "Camera Information";
             this.cameraToolStripMenuItem.Click += new System.EventHandler(this.cameraToolStripMenuItem_Click);
             // 
-            // arduinoInformationToolStripMenuItem
+            // cncInformationToolStripMenuItem
             // 
-            this.arduinoInformationToolStripMenuItem.Name = "arduinoInformationToolStripMenuItem";
-            this.arduinoInformationToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.arduinoInformationToolStripMenuItem.Text = "Arduino Information";
+            this.cncInformationToolStripMenuItem.Name = "cncInformationToolStripMenuItem";
+            this.cncInformationToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.cncInformationToolStripMenuItem.Text = "CNC Information";
+            this.cncInformationToolStripMenuItem.Click += new System.EventHandler(this.arduinoInformationToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitButton_click);
             // 
-            // takePicture_button
+            // cameraStatusLabel
             // 
-            this.takePicture_button.Location = new System.Drawing.Point(992, 614);
-            this.takePicture_button.Name = "takePicture_button";
-            this.takePicture_button.Size = new System.Drawing.Size(166, 38);
-            this.takePicture_button.TabIndex = 14;
-            this.takePicture_button.Text = "Take Pictures";
-            this.takePicture_button.UseVisualStyleBackColor = true;
-            this.takePicture_button.Click += new System.EventHandler(this.takePicture_button_Click);
+            this.cameraStatusLabel.AutoSize = true;
+            this.cameraStatusLabel.Location = new System.Drawing.Point(4, 264);
+            this.cameraStatusLabel.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.cameraStatusLabel.Name = "cameraStatusLabel";
+            this.cameraStatusLabel.Size = new System.Drawing.Size(79, 13);
+            this.cameraStatusLabel.TabIndex = 15;
+            this.cameraStatusLabel.Text = "Camera Status:";
+            // 
+            // cncStatusLabel
+            // 
+            this.cncStatusLabel.AutoSize = true;
+            this.cncStatusLabel.Location = new System.Drawing.Point(4, 287);
+            this.cncStatusLabel.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.cncStatusLabel.Name = "cncStatusLabel";
+            this.cncStatusLabel.Size = new System.Drawing.Size(65, 13);
+            this.cncStatusLabel.TabIndex = 16;
+            this.cncStatusLabel.Text = "CNC Status:";
+            // 
+            // statusOfCameraLabel
+            // 
+            this.statusOfCameraLabel.AutoSize = true;
+            this.statusOfCameraLabel.ForeColor = System.Drawing.Color.Red;
+            this.statusOfCameraLabel.Location = new System.Drawing.Point(89, 264);
+            this.statusOfCameraLabel.Name = "statusOfCameraLabel";
+            this.statusOfCameraLabel.Size = new System.Drawing.Size(79, 13);
+            this.statusOfCameraLabel.TabIndex = 17;
+            this.statusOfCameraLabel.Text = "Not Connected";
+            // 
+            // statusOfCNCLabel
+            // 
+            this.statusOfCNCLabel.AutoSize = true;
+            this.statusOfCNCLabel.ForeColor = System.Drawing.Color.Red;
+            this.statusOfCNCLabel.Location = new System.Drawing.Point(75, 287);
+            this.statusOfCNCLabel.Name = "statusOfCNCLabel";
+            this.statusOfCNCLabel.Size = new System.Drawing.Size(79, 13);
+            this.statusOfCNCLabel.TabIndex = 18;
+            this.statusOfCNCLabel.Text = "Not Connected";
             // 
             // Optocheck
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1170, 725);
-            this.Controls.Add(this.takePicture_button);
+            this.Controls.Add(this.statusOfCNCLabel);
+            this.Controls.Add(this.statusOfCameraLabel);
+            this.Controls.Add(this.cncStatusLabel);
+            this.Controls.Add(this.cameraStatusLabel);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.scanProgressBar);
             this.Controls.Add(this.cancelScanButton);
@@ -559,8 +596,11 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cameraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.Button takePicture_button;
-        private System.Windows.Forms.ToolStripMenuItem arduinoInformationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cncInformationToolStripMenuItem;
+        private System.Windows.Forms.Label cameraStatusLabel;
+        private System.Windows.Forms.Label cncStatusLabel;
+        private System.Windows.Forms.Label statusOfCameraLabel;
+        private System.Windows.Forms.Label statusOfCNCLabel;
     }
 }
 
