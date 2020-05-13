@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace Optocheck
 {
-    public partial class Form1 : Form
+    public partial class MeasurementPicture : Form
     {
-        public Form1()
+        public MeasurementPicture()
         {
             InitializeComponent();
+        }
+
+        private void MeasurementPicture_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
